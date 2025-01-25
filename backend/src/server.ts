@@ -55,12 +55,16 @@ function configureApp(): express.Application {
       info: swaggerLetterHead.info,
       servers: [
         {
+          url: "https://umurava-skills-challenge-software.onrender.com",
+          description: "Production",
+        },
+        {
           url: "http://localhost:8000",
           description: "Localhost",
         },
       ],
     },
-    apis: ["./docs/*.js", "./docs/*.yaml", "./routes/*.js"],
+    apis: ["./src/docs/*.js", "./src/docs/*.yaml", "./src/routes/*.js"],
   };
   const swaggerDocument = swaggerJSDoc(options);
 
@@ -70,7 +74,9 @@ function configureApp(): express.Application {
 
   // Welcome route
   app.get("/", (req, res) => {
-    res.status(200).send("Welcome to Personal Wallet Management System");
+    res
+      .status(200)
+      .send("Welcome to Umurava Skills Challenge_Software Development_EdTech");
   });
 
   app.all("*", (req, res) => {

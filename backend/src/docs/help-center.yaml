@@ -1,0 +1,111 @@
+paths:
+  /api/v1/help-center:
+    post:
+      summary: Create a new Help Center item
+      tags: [helpCenterManagement]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCenterItem"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenterItem"
+    get:
+      summary: Get all Help Center items
+      tags: [helpCenterManagement]
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpCenterItem"
+  /api/v1/help-center/{id}:
+    get:
+      summary: Get a Help Center item by ID
+      tags: [helpCenterManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenterItem"
+        "404":
+          description: Not Found
+    put:
+      summary: Update a Help Center item
+      tags: [helpCenterManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCenterItem"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenterItem"
+        "404":
+          description: Not Found
+    delete:
+      summary: Delete a Help Center item
+      tags: [helpCenterManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpCenterItem"
+        "404":
+          description: Not Found
+
+tags:
+  - name: helpCenterManagement
+    description: The help center managing API
+
+components:
+  schemas:
+    HelpCenterItem:
+      type: object
+      required:
+        - title
+        - content
+        - category
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        category:
+          type: string

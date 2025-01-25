@@ -1,0 +1,111 @@
+components:
+  schemas:
+    settings:
+      type: object
+      required:
+      properties:
+        theme:
+          type: string
+          enum: ["light", "dark"]
+          default: "light"
+        language:
+          type: string
+          default: "en"
+      example:
+        theme: "dark"
+        language: "en"
+
+tags:
+  - name: settingsManagement
+    description: The settings managing API
+
+paths:
+  /api/v1/settings:
+    post:
+      summary: Create user settings
+      tags: [settingsManagement]
+      description: Endpoint to create user settings
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/settings"
+      responses:
+        "201":
+          description: Settings created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/settings"
+        "400":
+          description: Bad request, validation error
+        "401":
+          description: Unauthorized, authentication error
+        "500":
+          description: Internal server error
+
+  /api/v1/settings/{userId}:
+    get:
+      summary: Get user settings
+      tags: [settingsManagement]
+      description: Retrieve settings for a specific user
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: The ID of the user
+      responses:
+        "200":
+          description: Successfully retrieved user settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/settings"
+        "401":
+          description: Unauthorized, authentication error
+        "404":
+          description: Settings not found
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update user settings
+      tags: [settingsManagement]
+      description: Update settings for a specific user
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: The ID of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/settings"
+      responses:
+        "200":
+          description: Settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/settings"
+        "400":
+          description: Bad request, validation error
+        "401":
+          description: Unauthorized, authentication error
+        "404":
+          description: Settings not found
+        "500":
+          description: Internal server error
