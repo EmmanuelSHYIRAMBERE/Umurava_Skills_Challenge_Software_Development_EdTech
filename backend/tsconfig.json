@@ -12,6 +12,9 @@
     "sourceMap": true,
     "noImplicitAny": true
   },
+  "copy-files": {
+    "src/config/swagger.yaml": "dist/config/swagger.yaml"
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
