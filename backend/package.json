@@ -5,7 +5,7 @@
   "scripts": {
     "server": "nodemon",
     "start": "node dist/server.js",
-    "build": "tsc && copyfiles -f src/config/swagger.yaml dist/config/swagger.yaml"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
