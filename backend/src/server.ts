@@ -60,7 +60,7 @@ function configureApp(): express.Application {
         },
       ],
     },
-    apis: ["./docs/*.js", "./docs/*.yaml", "./routes/*.js"],
+    apis: ["./src/docs/*.js", "./src/docs/*.yaml", "./src/routes/*.js"],
   };
   const swaggerDocument = swaggerJSDoc(options);
 

@@ -1,0 +1,186 @@
+# src/docs/challenge.yaml
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    challenge:
+      type: object
+      required:
+        - title
+        - description
+        - skills
+        - seniority
+        - timeline
+        - moneyPrize
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        seniority:
+          type: string
+          enum: [Junior, Intermediate, Senior]
+        timeline:
+          type: number
+        moneyPrize:
+          type: number
+        isOpen:
+          type: boolean
+        type:
+          type: string
+          enum: [Challenge, Hackathon]
+      example:
+        title: "Create a Dashboard for SokoFund"
+        description: "Design a dashboard for the SokoFund fintech platform"
+        skills: ["UI/UX Design", "User Research"]
+        seniority: "Junior"
+        timeline: 15
+        moneyPrize: 250
+        isOpen: true
+        type: Challenge
+
+tags:
+  - name: challengeManagement
+    description: The challenge managing API
+
+paths:
+  /api/v1/challenges:
+    post:
+      summary: Create a new challenge
+      tags: [challengeManagement]
+      description: Endpoint to create a new challenge
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/challenge"
+      responses:
+        "201":
+          description: Challenge created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/challenge"
+        "400":
+          description: Bad request, validation error
+        "401":
+          description: Unauthorized, authentication error
+        "500":
+          description: Internal server error
+
+    get:
+      summary: Get all challenges
+      tags: [challengeManagement]
+      description: Retrieve all challenges from the system
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved all challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/challenge"
+        "401":
+          description: Unauthorized, authentication error
+        "500":
+          description: Internal server error
+
+  /api/v1/challenges/{id}:
+    get:
+      summary: Get a challenge by ID
+      tags: [challengeManagement]
+      description: Retrieve a specific challenge by its ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the challenge
+      responses:
+        "200":
+          description: Successfully retrieved the challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/challenge"
+        "401":
+          description: Unauthorized, authentication error
+        "404":
+          description: Challenge not found
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update a challenge
+      tags: [challengeManagement]
+      description: Update a specific challenge by its ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the challenge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/challenge"
+      responses:
+        "200":
+          description: Challenge updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/challenge"
+        "400":
+          description: Bad request, validation error
+        "401":
+          description: Unauthorized, authentication error
+        "404":
+          description: Challenge not found
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete a challenge
+      tags: [challengeManagement]
+      description: Delete a specific challenge by its ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the challenge
+      responses:
+        "200":
+          description: Challenge deleted successfully
+        "401":
+          description: Unauthorized, authentication error
+        "404":
+          description: Challenge not found
+        "500":
+          description: Internal server error
