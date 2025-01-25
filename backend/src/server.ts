@@ -70,7 +70,9 @@ function configureApp(): express.Application {
 
   // Welcome route
   app.get("/", (req, res) => {
-    res.status(200).send("Welcome to Personal Wallet Management System");
+    res
+      .status(200)
+      .send("Welcome to Umurava Skills Challenge_Software Development_EdTech");
   });
 
   app.all("*", (req, res) => {
