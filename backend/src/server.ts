@@ -55,6 +55,10 @@ function configureApp(): express.Application {
       info: swaggerLetterHead.info,
       servers: [
         {
+          url: "https://umurava-skills-challenge-software.onrender.com",
+          description: "Production",
+        },
+        {
           url: "http://localhost:8000",
           description: "Localhost",
         },
