@@ -54,7 +54,7 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
 
       {/* Footer Section */}
       <div className="p-3">
-        <Link to={`/dashboard/challenge/${challenge.id}`}>
+        <Link to={`/dashboard/challenge-and-hackathons/${challenge.id}`}>
           <Button
             variant="default"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4"

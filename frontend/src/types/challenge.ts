@@ -10,3 +10,21 @@ export interface ChallengeCount {
   status: "Completed" | "Open" | "Ongoing";
   count: number;
 }
+
+export interface ProjectRequirement {
+  text: string;
+}
+
+export interface ProductDesign {
+  text: string;
+}
+
+export interface Deliverable {
+  text: string;
+}
+
+export interface KeyInstruction {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+}

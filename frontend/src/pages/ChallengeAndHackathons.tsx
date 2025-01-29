@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import ChallengeCard from "@/components/reusable/ChallengeCard";
 import type { Challenge } from "@/types/challenge";
-export default function Challenge() {
+export default function ChallengeAndHackathons() {
   // Sample data - replace with actual data source
   const challenges: Challenge[] = [
     {

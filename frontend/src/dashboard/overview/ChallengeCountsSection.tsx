@@ -9,7 +9,7 @@ const challengeCounts: ChallengeCount[] = [
 
 export default function ChallengeCountsSection() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+    <div className="grid grid-cols-3 gap-2 mb-2">
       {challengeCounts.map((challengeCounts: ChallengeCount, index) => (
         <ChallengeStatusCountCard
           key={index}
