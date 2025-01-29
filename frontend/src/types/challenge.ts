@@ -2,7 +2,8 @@ export interface Challenge {
   id: string;
   title: string;
   skills: string[];
-  seniority: "Junior" | "Intermediate" | "Senior";
+  seniority: string;
+  status: "Completed" | "Open" | "Ongoing";
   timeline: string;
 }
 export interface ChallengeCount {

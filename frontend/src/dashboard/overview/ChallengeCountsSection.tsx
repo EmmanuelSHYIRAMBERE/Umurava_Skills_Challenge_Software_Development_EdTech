@@ -1,5 +1,4 @@
-import ChallengeCardStatus from "@/components/reusable/ChallengeCardStatus";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import ChallengeStatusCountCard from "@/components/reusable/ChallengeStatusCountCard";
 import { ChallengeCount } from "@/types/challenge";
 
 const challengeCounts: ChallengeCount[] = [
@@ -10,15 +9,13 @@ const challengeCounts: ChallengeCount[] = [
 
 export default function ChallengeCountsSection() {
   return (
-    <Card className="mb-6">
-      <CardHeader>
-        <CardTitle>Build Work Experience through Skills Challenges</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="w-full grid grid-cols-3 gap-4">
-          <ChallengeCardStatus challenges={challengeCounts} />
-        </div>
-      </CardContent>
-    </Card>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      {challengeCounts.map((challengeCounts: ChallengeCount, index) => (
+        <ChallengeStatusCountCard
+          key={index}
+          challengeCounts={challengeCounts}
+        />
+      ))}
+    </div>
   );
 }

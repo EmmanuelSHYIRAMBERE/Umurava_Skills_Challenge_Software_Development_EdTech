@@ -1,20 +1,14 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import ChallengeCard from "@/components/reusable/ChallengeCard";
+import { Challenge } from "@/types/challenge";
 
-interface RecentChallenge {
-  id: string;
-  title: string;
-  skills: string[];
-  seniority: "Junior" | "Intermediate" | "Senior";
-  timeline: string;
-}
-
-const recentChallenges: RecentChallenge[] = [
+const recentChallenges: Challenge[] = [
   {
     id: "1",
     title: "Design a Dashboard for SokoFund, Fintech Product",
     skills: ["UI Design", "User Research"],
     seniority: "Junior",
+    status: "Ongoing",
     timeline: "15 Days",
   },
   {
@@ -22,6 +16,7 @@ const recentChallenges: RecentChallenge[] = [
     title: "Design a Dashboard for SokoFund for a Fintech Product",
     skills: ["UI Design", "User Research"],
     seniority: "Intermediate",
+    status: "Open",
     timeline: "15 Days",
   },
   {
@@ -29,6 +24,7 @@ const recentChallenges: RecentChallenge[] = [
     title: "Design a Dashboard for SokoFund for a Fintech Product",
     skills: ["UI Design", "User Research"],
     seniority: "Senior",
+    status: "Open",
     timeline: "15 Days",
   },
 ];
@@ -46,8 +42,8 @@ export default function RecentChallengesSection() {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {recentChallenges.map((challenge) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {recentChallenges.map((challenge: Challenge) => (
             <ChallengeCard key={challenge.id} challenge={challenge} />
           ))}
         </div>
