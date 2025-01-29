@@ -1,15 +1,46 @@
 import log1 from "../assets/CareerTicket_4x-removebg-preview 1.png"
+import { FaFacebookF, FaGooglePlusG, FaLinkedinIn,  FaYoutube } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-[#011b40] text-white py-16">
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="flex items-center">
-          <img src={log1} />
-          <div className="flex content-end">
-            <div className="bg-blue-500 w-6 h-6 rounded-full mr-2"></div>
-            <div className="bg-red-500 w-6 h-6 rounded-full mr-2"></div>
-            <div className="bg-yellow-500 w-6 h-6 rounded-full mr-2"></div>
-            <div className="bg-blue-500 w-6 h-6 rounded-full"></div>
+        <div className="container mx-auto flex items-center justify-between px-4 py-4 border-b border-gray-700 mb-8">
+          <div className="flex items-center">
+            <img src={log1} alt="Logo" className="h-10 w-10" />
+          </div>
+          <div className="flex space-x-2">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800 bg-white rounded-full p-2"
+            >
+              <FaFacebookF className="h-6 w-6" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800 bg-white rounded-full p-2"
+            >
+              <FaGooglePlusG className="h-6 w-6" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800 bg-white rounded-full p-2"
+            >
+              <FaLinkedinIn className="h-6 w-6" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800 bg-white rounded-full p-2"
+            >
+              <FaYoutube className="h-6 w-6" />
+            </a>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -129,7 +160,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-700">
+        <div className="mt-8 pt-8 border-t border-gray-700">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-gray-400">
               Copyright © All Rights Reserved SawaPay 2024.

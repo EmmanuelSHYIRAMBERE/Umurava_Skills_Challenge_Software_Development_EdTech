@@ -11,6 +11,7 @@ import Overview from "./dashboard/Dashboard";
 import Community from "./dashboard/Community";
 import Helpcenter from "./dashboard/Helpcenter";
 import Settings from "./dashboard/Settings";
+import Login from "./pages/Login";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,9 @@ export default function App() {
         element:<Settings/>
       },
     ]
+   },{
+    path:"login",
+    element:<Login/>
    },
    
     {
