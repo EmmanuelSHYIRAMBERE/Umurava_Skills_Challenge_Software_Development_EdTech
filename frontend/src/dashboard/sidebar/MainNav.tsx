@@ -9,14 +9,14 @@ const MainNav = () => {
       href: "/dashboard",
     },
     {
-      icon: <Users className="h-5 w-5" />,
-      label: "Community",
-      href: "/community",
+      icon: <Award className="h-5 w-5" />,
+      label: "Challenges & Hackathons",
+      href: "/dashboard/challenge-and-hackathons",
     },
     {
-      icon: <Award className="h-5 w-5" />,
-      label: "Hackathons",
-      href: "/hackathons",
+      icon: <Users className="h-5 w-5" />,
+      label: "Community",
+      href: "/dashboard/community",
     },
   ];
 

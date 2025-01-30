@@ -11,7 +11,7 @@ interface ChallengeStatusCountProps {
   challengeCounts: ChallengeCount;
 }
 
-const ChallengeStatusCountCard: React.FC<ChallengeStatusCountProps> = ({
+const OverviewChallengeStatusCountCard: React.FC<ChallengeStatusCountProps> = ({
   challengeCounts,
 }) => {
   return (
@@ -44,4 +44,4 @@ const ChallengeStatusCountCard: React.FC<ChallengeStatusCountProps> = ({
   );
 };
 
-export default ChallengeStatusCountCard;
+export default OverviewChallengeStatusCountCard;

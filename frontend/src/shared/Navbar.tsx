@@ -1,59 +1,25 @@
-import { Search, UserCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { MobileMenu } from "@/dashboard/mobile/MobileMenu";
-import { NotificationCenter } from "@/dashboard/mobile/NotificationCenter";
+import { NotificationBell } from "@/dashboard/navbar/NotificationBell";
+import { SearchBar } from "@/dashboard/navbar/SearchBar";
+import { UserAvatar } from "@/dashboard/navbar/UserAvatar";
 
 const Navbar = () => {
   return (
-    <header className="sticky top-0 z-50 w-full h-14 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="h-16 px-4 flex items-center justify-between max-w-[1920px] mx-auto w-full">
-        <div className="flex items-center">
-          <MobileMenu />
-          <div className="hidden md:flex max-w-md flex-1">
-            <div className="relative w-full">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search here..."
-                className="w-full pl-8"
-              />
-            </div>
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:ml-72">
+      <div className="flex h-12 items-center px-4 md:px-6">
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="flex w-full md:w-1/2">
+            <MobileMenu />
+
+            <SearchBar />
+          </div>
+          <div className="flex items-center gap-4">
+            <NotificationBell />
+            <UserAvatar />
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <NotificationCenter />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <UserCircle className="h-8 w-8" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem>
-                <UserCircle className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Account settings</DropdownMenuItem>
-              <DropdownMenuItem>Preferences</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
-                Sign out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

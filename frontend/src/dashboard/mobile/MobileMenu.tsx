@@ -10,9 +10,9 @@ export const MobileMenu = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden fixed top-4 left-4 z-50"
+          className="lg:hidden fixed left-4 z-50 h-10 w-10 bg-gray-100 rounded-full"
         >
-          <Menu className="h-5 w-5 text-blue-600" />
+          <Menu className="h-12 w-12 text-blue-600" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-72 p-0 bg-blue-600">

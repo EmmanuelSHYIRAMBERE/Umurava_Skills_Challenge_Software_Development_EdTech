@@ -5,7 +5,7 @@ import UserProfile from "@/dashboard/sidebar/UserProfile";
 
 const Sidebar = () => {
   return (
-    <div className="hidden lg:flex flex-col h-screen w-56 bg-blue-600">
+    <div className="hidden top-0 lg:flex flex-col h-screen w-72 bg-blue-600">
       <Logo />
 
       <div className="flex-1 flex flex-col">

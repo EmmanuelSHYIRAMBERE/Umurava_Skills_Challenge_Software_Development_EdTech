@@ -1,9 +1,12 @@
 import React from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import ChallengeCard from "@/components/reusable/ChallengeCard";
-import type { Challenge } from "@/types/challenge";
+import type { Challenge, ChallengeStatus } from "@/types/challenge";
+import ChallengeCountStatusCard from "@/dashboard/challenge/ChallengeCountStatusCard";
 export default function ChallengeAndHackathons() {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setFilter] = React.useState<ChallengeStatus>("all");
+
   // Sample data - replace with actual data source
   const challenges: Challenge[] = [
     {
@@ -57,41 +60,44 @@ export default function ChallengeAndHackathons() {
     },
   ];
 
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [filter, setFilter] = React.useState("all");
-
   const filteredChallenges = React.useMemo(() => {
     if (filter === "all") return challenges;
-    return challenges.filter((challenge) => challenge.status === filter);
-  }, [filter]);
+    return challenges.filter(
+      (challenge) => challenge.status.toLowerCase() === filter
+    );
+  }, [filter, challenges]);
+
+  const getChallengeCount = (status: ChallengeStatus) => {
+    if (status === "all") return challenges.length;
+    return challenges.filter(
+      (challenge) => challenge.status.toLowerCase() === status
+    ).length;
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Challenges</h1>
+      <div className="mb-4">
+        <h1 className="text-lg font-bold">Challenges</h1>
         <p className="text-gray-600">
           Join a challenge or a hackathon to gain valuable work experience
         </p>
       </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue="all" className="mb-8">
-        <TabsList className="grid w-full grid-cols-4 lg:w-[400px]">
-          <TabsTrigger value="all" onClick={() => setFilter("all")}>
-            All Challenge
-          </TabsTrigger>
-          <TabsTrigger value="completed" onClick={() => setFilter("completed")}>
-            Completed
-          </TabsTrigger>
-          <TabsTrigger value="open" onClick={() => setFilter("open")}>
-            Open
-          </TabsTrigger>
-          <TabsTrigger value="ongoing" onClick={() => setFilter("ongoing")}>
-            Ongoing
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      {/* Challenge Status Cards */}
+      <div className="flex flex-col md:flex-row gap-3 mb-3">
+        {(["all", "completed", "open", "ongoing"] as ChallengeStatus[]).map(
+          (status) => (
+            <ChallengeCountStatusCard
+              key={status}
+              status={status}
+              count={getChallengeCount(status)}
+              isActive={filter === status}
+              onClick={() => setFilter(status)}
+            />
+          )
+        )}
+      </div>
 
       {/* Challenge Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -101,7 +107,7 @@ export default function ChallengeAndHackathons() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-2">
+      <div className="flex items-center justify-between gap-2 px-8">
         <Button
           variant="outline"
           onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
@@ -111,20 +117,9 @@ export default function ChallengeAndHackathons() {
         </Button>
         <Button
           variant="outline"
-          className={currentPage === 1 ? "bg-blue-50" : ""}
-        >
-          1
-        </Button>
-        <Button
-          variant="outline"
-          className={currentPage === 2 ? "bg-blue-50" : ""}
-        >
-          2
-        </Button>
-        <Button
-          variant="outline"
           onClick={() => setCurrentPage((p) => p + 1)}
           disabled={currentPage === 2}
+          className="bg-blue-600 hover:bg-blue-700 text-white"
         >
           Next
         </Button>

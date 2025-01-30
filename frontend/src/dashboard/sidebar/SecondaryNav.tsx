@@ -6,17 +6,17 @@ const SecondaryNav = () => {
     {
       icon: <Settings className="h-5 w-5" />,
       label: "Settings",
-      href: "/settings",
+      href: "/dashboard/#",
     },
     {
       icon: <HelpCircle className="h-5 w-5" />,
       label: "Help Center",
-      href: "/help",
+      href: "/dashboard/#",
     },
     {
       icon: <Users className="h-5 w-5" />,
       label: "Refer family & friends",
-      href: "/refer",
+      href: "/dashboard/#",
     },
   ];
 

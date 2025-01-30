@@ -1,3 +1,11 @@
+export type ChallengeStatus = "all" | "completed" | "open" | "ongoing";
+
+export interface ChallengeCountStatusCardProps {
+  status: ChallengeStatus;
+  count: number;
+  isActive?: boolean;
+  onClick?: () => void;
+}
 export interface Challenge {
   id: string;
   title: string;

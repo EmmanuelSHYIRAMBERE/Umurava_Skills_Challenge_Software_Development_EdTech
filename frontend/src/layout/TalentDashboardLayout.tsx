@@ -8,9 +8,9 @@ const TalentDashboardLayout: React.FC = () => {
   return (
     <div className="flex h-full absolute top-0 left-0 bottom-0 right-0 overflow-hidden bg-white">
       <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 px-6">
         <Navbar />
-        <main className="flex-1 overflow-y-auto px-3">
+        <main className="flex-1 overflow-y-auto p-3 mt-12">
           <div className="max-w-[1920px] mx-auto w-full">
             <Outlet />
           </div>
