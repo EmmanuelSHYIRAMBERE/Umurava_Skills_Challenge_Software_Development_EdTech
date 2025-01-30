@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { CompanyLogo } from "./CompanyLogo";
+import { LogoCard } from "./LogoCard";
 import { ListSection } from "./ListSection";
 
 export const ProjectCard = () => {
@@ -27,7 +27,7 @@ export const ProjectCard = () => {
 
   return (
     <Card className="p-3 space-y-3">
-      <CompanyLogo />
+      <LogoCard />
 
       <div className="space-y-2">
         <h2 className="font-bold text-xl">
