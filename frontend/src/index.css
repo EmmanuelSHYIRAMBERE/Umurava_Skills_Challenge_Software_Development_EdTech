@@ -64,3 +64,15 @@
     @apply bg-background text-foreground;
   }
 }
+/* Add these styles to your CSS file */
+.nav-link {
+  color: #6B7280; /* Default text color */
+}
+
+.nav-link:hover {
+  color: #007BFF; /* Blue color on hover */
+}
+
+.nav-link.active {
+  color: #007BFF; /* Blue color for the active link */
+}

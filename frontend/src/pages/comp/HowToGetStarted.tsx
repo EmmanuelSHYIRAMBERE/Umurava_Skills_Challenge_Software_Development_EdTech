@@ -1,4 +1,4 @@
-import React from "react";
+
 import login from "../../assets/login.png";
 import challenge from "../../assets/challe.png";
 
