@@ -30,7 +30,13 @@ const Sidebar = () => {
                 Dashboard
               </li>
             </Link>
-            <Link to={isAdmin ? "/admin/challenges" : "/dashboard/challenges"}>
+            <Link
+              to={
+                isAdmin
+                  ? "/admin/challenges"
+                  : "/dashboard/challenge-and-hackathons"
+              }
+            >
               <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
                 <FaRegFileAlt className="mr-2" />
                 Challenges & Hackathons

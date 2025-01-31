@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
   return (
-    <div className="bg-white border rounded-lg shadow-sm w-full max-w-md p-3">
+    <div className="bg-white border rounded-lg shadow-sm w-full max-w-md p-8">
       {/* Header Section */}
       <div className="relative">
-        <div className="bg-blue-600 rounded-lg p-2 h-36 w-full relative overflow-hidden group hover:shadow-md hover:scale-105 transition duration-2000 flex justify-center items-center">
+        <div className="bg-blue-600 rounded-lg p-2 h-40 w-full relative overflow-hidden group hover:shadow-md hover:scale-105 transition duration-2000 flex justify-center items-center">
           <img src={logo} alt="Logo" className="w-48" />
         </div>
         <div className="absolute top-4 right-4">
@@ -54,7 +54,7 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
 
       {/* Footer Section */}
       <div className="p-3">
-        <Link to={`/dashboard/challenge/${challenge.id}`}>
+        <Link to={`/dashboard/challenge-and-hackathons/${challenge.id}`}>
           <Button
             variant="default"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4"

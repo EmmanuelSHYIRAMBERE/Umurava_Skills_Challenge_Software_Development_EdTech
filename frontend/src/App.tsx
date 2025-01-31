@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./layout/Layout";
 import Home from "./pages/Home";
-import Challenge from "./pages/Challenge";
+import ChallengeAndHackathons from "./pages/ChallengeAndHackathons";
+import ChallengeDetails from "./pages/ChallengeDetails";
 import Institution from "./pages/Institution";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
@@ -11,7 +12,7 @@ import Community from "./dashboard/Community";
 import Helpcenter from "./dashboard/Helpcenter";
 import Settings from "./dashboard/Settings";
 import Login from "./pages/Login";
-import ChallengeDetails from "./dashboard/challenge/ChallengeDetails";
+
 import DashboardLayout from "./layout/DashboardLayout";
 import AdminView from "./admin/pag/overview/AdminView";
 import AdChallenge from "./admin/pag/challenge/AdChallenge";
@@ -35,8 +36,8 @@ export default function App() {
           element: <Home />,
         },
         {
-          path: "available-challenge",
-          element: <Challenge />,
+          path: "challenge",
+          element: <ChallengeAndHackathons />,
         },
         {
           path: "learning",
@@ -69,11 +70,13 @@ export default function App() {
           element: <Overview />,
         },
         {
-          path: "challenge",
-          element: <Challenge />,
+          path: "challenge-and-hackathons",
           children: [
             {
-              // Take the challenge id as a parameter
+              path: "",
+              element: <ChallengeAndHackathons />,
+            },
+            {
               path: ":id",
               element: <ChallengeDetails />,
             },

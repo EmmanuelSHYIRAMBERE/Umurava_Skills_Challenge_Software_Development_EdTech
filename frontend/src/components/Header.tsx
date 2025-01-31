@@ -43,7 +43,7 @@ const Header = () => {
               Home
             </a>
             <a
-              href="/available-challenge"
+              href="/challenge"
               className={`nav-link ${isActive("/available-challenge")}`}
             >
               Challenge & Hackthons
