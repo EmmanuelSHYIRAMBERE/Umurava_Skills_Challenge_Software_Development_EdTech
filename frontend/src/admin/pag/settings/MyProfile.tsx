@@ -1,46 +1,46 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
 const MyProfile = () => {
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    bio: "Software Developer with a passion for building scalable web applications.",
-    location: "New York, USA",
-    website: "https://johndoe.com",
-    twitter: "@johndoe",
-    linkedin: "linkedin.com/in/johndoe",
-  });
+  // const [user, setUser] = useState({
+  //   name: "John Doe",
+  //   email: "john.doe@example.com",
+  //   bio: "Software Developer with a passion for building scalable web applications.",
+  //   location: "New York, USA",
+  //   website: "https://johndoe.com",
+  //   twitter: "@johndoe",
+  //   linkedin: "linkedin.com/in/johndoe",
+  // });
 
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setUser({
+  //     ...user,
+  //     [name]: value,
+  //   });
+  // };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  // const handleEdit = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    // Here you can add logic to save the user data to your backend
-  };
+  // const handleSave = () => {
+  //   setIsEditing(false);
+  //   // Here you can add logic to save the user data to your backend
+  // };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    // Optionally, you can revert the user data to its original state
-  };
+  // const handleCancel = () => {
+  //   setIsEditing(false);
+  //   // Optionally, you can revert the user data to its original state
+  // };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
       <h1 className="text-4xl font-bold text-center mb-10 text-gray-900">
         My Profile
       </h1>
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      {/* <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex items-center mb-6">
           <div className="w-24 h-24 bg-gray-300 rounded-full mr-4"></div>
           <div>
@@ -173,7 +173,7 @@ const MyProfile = () => {
             Edit Profile
           </button>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,21 +1,21 @@
 import {
   FaHome,
   FaUserFriends,
-
   FaUserPlus,
   FaRegFileAlt,
 } from "react-icons/fa";
-import log from "../../assets/log.svg";
+import log from "../assets/log.svg";
 import { Link } from "react-router-dom";
 import { TbHeadset } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
-import UserAvatar from "../comp/UserAvatar"; // Import the UserAvatar component
+import UserAvatar from "../admin/comp/UserAvatar"; // Import the UserAvatar component
 import { LuLogOut } from "react-icons/lu";
 
-const SuperSidebar = () => {
+const Sidebar = () => {
   const user = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
+  const isAdmin = user && user.role === "admin";
   return (
     <div className="fixed bg-blue-500 text-white h-screen w-72 p-6 flex flex-col justify-between">
       <div>
@@ -24,19 +24,19 @@ const SuperSidebar = () => {
         </div>
         <nav>
           <ul className="space-y-4">
-            <Link to="">
+            <Link to={isAdmin ? "/admin" : "/dashboard"}>
               <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
                 <FaHome className="mr-2" />
                 Dashboard
               </li>
             </Link>
-            <Link to="challenges">
+            <Link to={isAdmin ? "/admin/challenges" : "/dashboard/challenges"}>
               <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
                 <FaRegFileAlt className="mr-2" />
                 Challenges & Hackathons
               </li>
             </Link>
-            <Link to="community">
+            <Link to={isAdmin ? "/admin/community" : "/dashboard/community"}>
               <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
                 <FaUserPlus className="mr-2" />
                 Community
@@ -46,19 +46,19 @@ const SuperSidebar = () => {
         </nav>
       </div>
       <div className="space-y-4">
-        <Link to="settings">
+        <Link to={isAdmin ? "/admin/settings" : "/dashboard/settings"}>
           <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
             <FiSettings className="mr-2" />
             Settings
           </div>
         </Link>
-        <Link to="help-center">
+        <Link to={isAdmin ? "/admin/help-center" : "/dashboard/help-center"}>
           <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
             <TbHeadset className="mr-2" />
             Help Center
           </div>
         </Link>
-        <Link to="/refer">
+        <Link to={isAdmin ? "/admin/refer" : "/dashboard/refer"}>
           <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
             <FaUserFriends className="mr-2" />
             Refer family & friends
@@ -84,4 +84,4 @@ const SuperSidebar = () => {
   );
 };
 
-export default SuperSidebar;
+export default Sidebar;

@@ -1,7 +1,19 @@
-import React from "react";
-import { FileText, Users } from "lucide-react";
 
-const MetricCard = ({ title, value, percentage, period, icon: Icon }) => (
+import { FileText, Users } from "lucide-react";
+interface MetricCardProps {
+  title: string;
+  value: number;
+  percentage: number;
+  period: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
+const MetricCard: React.FC<MetricCardProps> = ({
+  title,
+  value,
+  percentage,
+  period,
+  icon: Icon,
+}) => (
   <div className="bg-white rounded-lg p-4 border border-gray-200">
     <div className="flex justify-end mb-4">
       <div className="text-sm text-gray-500 flex items-center gap-1">

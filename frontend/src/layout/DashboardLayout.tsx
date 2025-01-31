@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-
 import { Menu, X } from "lucide-react";
-import SuperSidebar from "@/admin/layout/SuperSidebar";
-import SuperNavbar from "@/admin/layout/SuperNavbar";
+import SuperSidebar from "@/components/Sidebar";
+import SuperNavbar from "@/components/Navbar";
 
-const SuperLayout: React.FC = () => {
+const DashboardLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -55,5 +54,4 @@ const SuperLayout: React.FC = () => {
   );
 };
 
-export default SuperLayout;
-
+export default DashboardLayout;

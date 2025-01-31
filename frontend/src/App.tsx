@@ -6,14 +6,13 @@ import Institution from "./pages/Institution";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./constansts/NotFound";
-import AdminLayout from "./layout/AdminLayout";
 import Overview from "./dashboard/Dashboard";
 import Community from "./dashboard/Community";
 import Helpcenter from "./dashboard/Helpcenter";
 import Settings from "./dashboard/Settings";
 import Login from "./pages/Login";
 import ChallengeDetails from "./dashboard/challenge/ChallengeDetails";
-import SuperLayout from "./layout/SuperLayout";
+import DashboardLayout from "./layout/DashboardLayout";
 import AdminView from "./admin/pag/overview/AdminView";
 import AdChallenge from "./admin/pag/challenge/AdChallenge";
 import AdCommunity from "./admin/pag/community/AdCommunity";
@@ -23,6 +22,7 @@ import CreateChallengeForm from "./admin/pag/challenge/CreateChallengeForm";
 import ProjectBrief from "./admin/pag/challenge/ManagerChalleng";
 import MyProfile from "./admin/pag/settings/MyProfile";
 import ProtectedRoute from "./constansts/ProtectedRoute";
+import ErrorBoundary from "./constansts/ErrBoundary";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -60,7 +60,7 @@ export default function App() {
       path: "dashboard",
       element: (
         <ProtectedRoute allowedRoles={["user"]}>
-          <AdminLayout />
+          <DashboardLayout />
         </ProtectedRoute>
       ),
       children: [
@@ -97,8 +97,8 @@ export default function App() {
     {
       path: "admin",
       element: (
-        <ProtectedRoute allowedRoles={["admin","user"]}>
-          <SuperLayout />
+        <ProtectedRoute allowedRoles={["admin"]}>
+          <DashboardLayout />
         </ProtectedRoute>
       ),
       children: [
@@ -137,6 +137,7 @@ export default function App() {
     {
       path: "*",
       element: <NotFound />,
+      errorElement: <ErrorBoundary />,
     },
   ]);
 

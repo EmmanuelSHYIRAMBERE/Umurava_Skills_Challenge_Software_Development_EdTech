@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-const SuperNavbar = () => {
+const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
@@ -233,4 +233,4 @@ const user = localStorage.getItem("user")
   );
 };
 
-export default SuperNavbar;
+export default Navbar;

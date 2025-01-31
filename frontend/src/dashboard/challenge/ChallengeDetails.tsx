@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import ProjectHeader from "./ProjectHeader";
 import RequirementsList from "./RequirementsList";

@@ -5,7 +5,8 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 
 export default function AdminView() {
-  const challenges: Challenge[] = [
+  const challenges = React.useMemo<Challenge[]>(
+    () => [
       {
         id: "1",
         title: "Design a Dashboard for SaasFund, Fintech Product",
@@ -55,16 +56,17 @@ export default function AdminView() {
         seniority: "(Junior, Mid-Level, Senior)",
         timeline: "2 weeks",
       },
-    ];
-  
-    
-    const [filter, setFilter] = React.useState("all");
-  
-    const filteredChallenges = React.useMemo(() => {
-      if (filter === "all") return challenges;
-      return challenges.filter((challenge) => challenge.status === filter);
-    }, [filter]);
-  
+    ],
+    []
+  );
+
+  const [filter] = React.useState("all");
+
+  const filteredChallenges = React.useMemo(() => {
+    if (filter === "all") return challenges;
+    return challenges.filter((challenge) => challenge.status === filter);
+  }, [filter, challenges]);
+
   return (
     <div className="bg-gray-50 px-8 mt-4 ml-8">
       <Dashboard1 />
