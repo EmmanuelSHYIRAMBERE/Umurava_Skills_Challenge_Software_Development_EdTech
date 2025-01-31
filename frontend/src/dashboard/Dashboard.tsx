@@ -4,7 +4,7 @@ import WelcomeSection from "./overview/WelcomeSection";
 
 export default function Overview() {
   return (
-    <div className="grid">
+    <div className="grid px-8  ml-8 mt-4">
       <WelcomeSection />
       <ChallengeCountsSection />
       <RecentChallengesSection />

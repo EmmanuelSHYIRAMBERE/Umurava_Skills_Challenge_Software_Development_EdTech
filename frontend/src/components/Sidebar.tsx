@@ -5,7 +5,7 @@ import {
   FaRegFileAlt,
 } from "react-icons/fa";
 import log from "../assets/log.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { TbHeadset } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
 import UserAvatar from "../admin/comp/UserAvatar"; // Import the UserAvatar component
@@ -16,6 +16,12 @@ const Sidebar = () => {
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
   const isAdmin = user && user.role === "admin";
+  const location = useLocation();
+
+  const isActive = (path:string) => {
+    return location.pathname === path ? "bg-white text-blue-500" : "";
+  };
+
   return (
     <div className="fixed bg-blue-500 text-white h-screen w-72 p-6 flex flex-col justify-between">
       <div>
@@ -25,7 +31,11 @@ const Sidebar = () => {
         <nav>
           <ul className="space-y-4">
             <Link to={isAdmin ? "/admin" : "/dashboard"}>
-              <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+              <li
+                className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+                  isAdmin ? "/admin" : "/dashboard"
+                )}`}
+              >
                 <FaHome className="mr-2" />
                 Dashboard
               </li>
@@ -37,13 +47,23 @@ const Sidebar = () => {
                   : "/dashboard/challenge-and-hackathons"
               }
             >
-              <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+              <li
+                className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+                  isAdmin
+                    ? "/admin/challenges"
+                    : "/dashboard/challenge-and-hackathons"
+                )}`}
+              >
                 <FaRegFileAlt className="mr-2" />
                 Challenges & Hackathons
               </li>
             </Link>
             <Link to={isAdmin ? "/admin/community" : "/dashboard/community"}>
-              <li className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+              <li
+                className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+                  isAdmin ? "/admin/community" : "/dashboard/community"
+                )}`}
+              >
                 <FaUserPlus className="mr-2" />
                 Community
               </li>
@@ -53,19 +73,31 @@ const Sidebar = () => {
       </div>
       <div className="space-y-4">
         <Link to={isAdmin ? "/admin/settings" : "/dashboard/settings"}>
-          <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+          <div
+            className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+              isAdmin ? "/admin/settings" : "/dashboard/settings"
+            )}`}
+          >
             <FiSettings className="mr-2" />
             Settings
           </div>
         </Link>
         <Link to={isAdmin ? "/admin/help-center" : "/dashboard/help-center"}>
-          <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+          <div
+            className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+              isAdmin ? "/admin/help-center" : "/dashboard/help-center"
+            )}`}
+          >
             <TbHeadset className="mr-2" />
             Help Center
           </div>
         </Link>
         <Link to={isAdmin ? "/admin/refer" : "/dashboard/refer"}>
-          <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
+          <div
+            className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
+              isAdmin ? "/admin/refer" : "/dashboard/refer"
+            )}`}
+          >
             <FaUserFriends className="mr-2" />
             Refer family & friends
           </div>
