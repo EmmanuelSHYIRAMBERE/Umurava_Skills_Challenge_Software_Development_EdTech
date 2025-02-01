@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +31,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  
 
   return (
     <div className="mb-4 relative">
@@ -68,6 +69,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -143,16 +145,16 @@ const navigate = useNavigate();
           name: formData.name,
         }
       : { email: formData.email, password: formData.password };
-console.log("apiData",apiData);
+ setIsLoading(true);
     try {
-    const response = await axios.post(
-      isSignUp
-        ? `${SERVER_BASE_URL}/api/v1/user`
-        : `${SERVER_BASE_URL}/api/v1/auth/login`,
-      apiData
-    );
+      const response = await axios.post(
+        isSignUp
+          ? `${SERVER_BASE_URL}/api/v1/user`
+          : `${SERVER_BASE_URL}/api/v1/auth/login`,
+        apiData
+      );
       alert("Success!");
-      console.log("response",response);
+      console.log("response", response);
       // Store user data and token in local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
@@ -164,7 +166,9 @@ console.log("apiData",apiData);
         ...prevErrors,
         api: "An error occurred. Please try again.",
       }));
-      console.log("error",error);
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -274,11 +278,20 @@ console.log("apiData",apiData);
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600
                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-                     transition-colors duration-200"
+                     transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+                     flex items-center justify-center"
           >
-            {isSignUp ? "Sign Up" : "Sign In"}
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                {isSignUp ? "Signing Up..." : "Signing In..."}
+              </>
+            ) : (
+              <>{isSignUp ? "Sign Up" : "Sign In"}</>
+            )}
           </button>
         </form>
       </div>

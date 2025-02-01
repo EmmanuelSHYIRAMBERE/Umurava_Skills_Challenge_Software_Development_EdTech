@@ -9,21 +9,21 @@ import ContactUs from "./pages/ContactUs";
 import NotFound from "./constansts/NotFound";
 import Overview from "./dashboard/Dashboard";
 import Community from "./dashboard/Community";
-import Helpcenter from "./dashboard/Helpcenter";
-import Settings from "./dashboard/Settings";
 import Login from "./pages/Login";
-
 import DashboardLayout from "./layout/DashboardLayout";
 import AdminView from "./admin/pag/overview/AdminView";
 import AdChallenge from "./admin/pag/challenge/AdChallenge";
 import AdCommunity from "./admin/pag/community/AdCommunity";
-import AdHelpCenter from "./admin/pag/helpcenter/AdHelpCenter";
-import AdSettings from "./admin/pag/settings/AdSettings";
 import CreateChallengeForm from "./admin/pag/challenge/CreateChallengeForm";
 import ProjectBrief from "./admin/pag/challenge/ManagerChalleng";
-import MyProfile from "./admin/pag/settings/MyProfile";
+import MyProfile from "./settings/MyProfile";
 import ProtectedRoute from "./constansts/ProtectedRoute";
 import ErrorBoundary from "./constansts/ErrBoundary";
+import HomeChallenge from "./pages/Challenge";
+import HelpCenter from "./helpcenter/HelpCenter";
+import Settings from "./settings/Settings";
+import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
+
 
 export default function App() {
   const router = createBrowserRouter([
@@ -37,7 +37,7 @@ export default function App() {
         },
         {
           path: "challenge",
-          element: <ChallengeAndHackathons />,
+          element: <HomeChallenge />,
         },
         {
           path: "learning",
@@ -88,7 +88,7 @@ export default function App() {
         },
         {
           path: "help-center",
-          element: <Helpcenter />,
+          element: <HelpCenter />,
         },
         {
           path: "settings",
@@ -124,11 +124,11 @@ export default function App() {
         },
         {
           path: "help-center",
-          element: <AdHelpCenter />,
+          element: <AdminSupportDashboard />,
         },
         {
           path: "settings",
-          element: <AdSettings />,
+          element: <Settings />,
         },
         {
           path: "profile",

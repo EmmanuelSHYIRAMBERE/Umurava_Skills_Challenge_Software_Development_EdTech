@@ -1,6 +1,6 @@
 import ChallengeCard from "@/components/reusable/ChallengeCard";
 import type { Challenge } from "@/types/challenge";
-export default function Challenge() {
+export default function HomeChallenge() {
   // Sample data - replace with actual data source
   const challenges: Challenge[] = [
     {

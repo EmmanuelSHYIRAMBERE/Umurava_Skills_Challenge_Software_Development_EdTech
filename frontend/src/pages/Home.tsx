@@ -6,6 +6,15 @@ import dash from "../assets/payrolldashboard 1.png";
 import screenshot from "../assets/skill section banner 2.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import group from "../assets/joyful-group-classmates 1.png";
+import flip from "../assets/freepik__upload__42271 1.png";
+import reat from "../assets/reaction-illustration 1.png"
+import pro1 from "../assets/pro1.png";
+import pro2 from "../assets/pro2.png";
+import pro3 from "../assets/pro3.png";
+import pro4 from "../assets/pro4.png";
+import backgroundImage from "../assets/bg5.png";
+import backgroundImage2 from "../assets/bg4.png";
+import logo from "../assets/logo/sticker.png";
 import {
   FaBriefcase,
   FaAward,
@@ -19,8 +28,8 @@ export default function Home() {
     <>
       <div className="items-center justify-center min-h-screen max-w-6xl mx-auto">
         <section className="flex gap-8 items-center ">
-          <div className="bg-white rounded-lg shadow-md p-6 w-1/2">
-            <div className="max-w-sm mx-auto">
+          <div className="bg-white rounded-lg  p-6 h-96 w-1/2">
+            <div className="max-w-sm mx-auto ">
               <h2 className="text-3xl font-bold mb-4 text-blue-500">
                 Build Work Experience through Skills Challenges
               </h2>
@@ -28,82 +37,76 @@ export default function Home() {
                 Enhance employability and accelerate career growth by working on
                 hands-on projects & hackathons from businesses & organizations.
               </p>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 mt-14  rounded">
                 Get Started
               </button>
             </div>
           </div>
 
           {/* second */}
-          <div className="w-[746px] h-[501px] relative bg-gray-100">
-            <div className="left-[134px] top-[58px] absolute flex justify-start items-end gap-5">
-              <div className="w-[275px] h-[443px] relative bg-[#2b71f0] rounded-[32px] overflow-hidden">
-                <div className="w-[294px] h-[294px] left-[206.71px] top-[68.55px] absolute origin-top-left rotate-[140.71deg] bg-white rounded-full" />
-                <img
-                  className="w-[600px] h-[400px] left-[-181px] top-[55px] absolute"
-                  src={group}
-                  alt="Group of people"
-                />
+          <div className="flex flex-col items-center justify-center min-h-screen ">
+            <div className="relative flex items-center justify-center w-full max-w-4xl mx-auto">
+              {/* Logo Container with z-10 to ensure it appears in front */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg z-10">
+                <img src={reat} alt="Logo" className="w-16 h-16" />
               </div>
-              <div className="w-[275px] h-[443px] relative bg-[#2b71f0] rounded-[32px] overflow-hidden">
-                <div className="w-[294px] h-[294px] left-[49px] top-[-3.29px] absolute origin-top-left rotate-[55.69deg] bg-white rounded-full" />
-                <div className="w-[342.46px] h-[406.14px] left-[-34.23px] top-[37px] absolute">
+              <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden gap-4 z-0">
+                <div
+                  className="w-full md:w-1/2 relative bg-cover bg-center rounded-3xl"
+                  style={{ backgroundImage: `url(${backgroundImage2})` }}
+                >
                   <img
-                    className="w-[342.46px] h-[406.14px] left-0 top-0 absolute"
-                    src="https://via.placeholder.com/342x406"
-                    alt="Person with laptop"
-                  />
-                  <img
-                    className="w-[66.12px] h-[21.94px] left-[138.07px] top-[295.74px] absolute origin-top-left rotate-[-1.39deg]"
-                    src="https://via.placeholder.com/66x22"
-                    alt="Logo 1"
-                  />
-                  <img
-                    className="w-[20.11px] h-[6.64px] left-[216.87px] top-[233.18px] absolute origin-top-left rotate-[-1.39deg]"
-                    src="https://via.placeholder.com/20x7"
-                    alt="Logo 2"
+                    src={group}
+                    alt="Left Image"
+                    className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
-                <div className="w-[275px] h-[86px] left-0 top-[355px] absolute bg-gradient-to-b from-[#2b70ef] to-[#2b71f0] rounded-[32px]" />
-              </div>
-            </div>
-            <div className="w-[201px] h-[53.95px] left-[56px] top-[431px] absolute bg-white rounded-[52.89px] overflow-hidden">
-              <div className="w-[179.84px] left-[10.58px] top-[10.58px] absolute flex justify-start items-center gap-[14.35px]">
-                <div className="flex justify-start items-center">
+                <div
+                  className="w-full md:w-1/2 p-8 relative bg-cover bg-center rounded-3xl"
+                  style={{ backgroundImage: `url(${backgroundImage})` }}
+                >
                   <img
-                    className="w-[31.68px] h-[31.68px] rounded-full border border-white"
-                    src="https://via.placeholder.com/32x32"
+                    src={flip}
+                    alt="Right Image"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <div className="absolute bottom-24 left-28 z-10">
+                    <img src={logo} alt="Logo" className="w-16 h-8" />
+                  </div>
+                </div>
+              </div>
+              {/* Avatars and Text Container */}
+              <div className="absolute bottom-8 -left-10 transform -translate-x-1/2 translate-y-1/2 bg-white rounded-3xl p-2 shadow-lg flex items-center z-10">
+                <div className="flex items-center gap-1">
+                  <img
+                    className="w-8 h-8 rounded-full border border-white"
+                    src={pro1}
                     alt="Avatar 1"
                   />
                   <img
-                    className="w-[31.68px] h-[31.68px] rounded-full border border-white"
-                    src="https://via.placeholder.com/32x32"
+                    className="w-8 h-8 rounded-full border border-white"
+                    src={pro2}
                     alt="Avatar 2"
                   />
                   <img
-                    className="w-[31.68px] h-[31.68px] rounded-full border border-white"
-                    src="https://via.placeholder.com/32x32"
+                    className="w-8 h-8 rounded-full border border-white"
+                    src={pro3}
                     alt="Avatar 3"
                   />
                   <img
-                    className="w-[31.68px] h-[31.68px] rounded-full border border-white"
-                    src="https://via.placeholder.com/32x32"
+                    className="w-8 h-8 rounded-full border border-white"
+                    src={pro4}
                     alt="Avatar 4"
                   />
                 </div>
-                <div className="text-[#2b3338] text-[10.76px] font-bold font-['DM Sans'] leading-none">
+                <div className="ml-1 w-8 text-[#2b3338] text-xs font-bold font-['DM_Sans'] leading-none">
                   20K+ Talents
                 </div>
               </div>
             </div>
-            <img
-              className="w-[120px] h-[120px] left-[243px] top-0 absolute"
-              src="https://via.placeholder.com/120x120"
-              alt="Logo"
-            />
           </div>
         </section>
-        
+
         <section>
           <div className="items-center justify-center  max-w-5xl mx-auto mt-1">
             <div className="container mx-auto px-4 py-12 ">

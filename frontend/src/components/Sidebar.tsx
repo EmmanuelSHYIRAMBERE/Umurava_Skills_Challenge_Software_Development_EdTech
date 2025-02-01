@@ -1,6 +1,5 @@
 import {
   FaHome,
-  FaUserFriends,
   FaUserPlus,
   FaRegFileAlt,
 } from "react-icons/fa";
@@ -10,6 +9,7 @@ import { TbHeadset } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
 import UserAvatar from "../admin/comp/UserAvatar"; // Import the UserAvatar component
 import { LuLogOut } from "react-icons/lu";
+import ReferLink from "@/refer/ReferLink";
 
 const Sidebar = () => {
   const user = localStorage.getItem("user")
@@ -92,16 +92,7 @@ const Sidebar = () => {
             Help Center
           </div>
         </Link>
-        <Link to={isAdmin ? "/admin/refer" : "/dashboard/refer"}>
-          <div
-            className={`flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500 ${isActive(
-              isAdmin ? "/admin/refer" : "/dashboard/refer"
-            )}`}
-          >
-            <FaUserFriends className="mr-2" />
-            Refer family & friends
-          </div>
-        </Link>
+        <ReferLink isAdmin={isAdmin} isActive={isActive} />
         <div className="flex items-center p-2 rounded-md hover:bg-white hover:text-blue-500">
           <UserAvatar
             avatarUrl="https://via.placeholder.com/150"

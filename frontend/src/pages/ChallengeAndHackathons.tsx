@@ -84,7 +84,7 @@ export default function ChallengeAndHackathons() {
         </p>
       </div>
 
-      {/* Challenge Status Cards */}
+    
       <div className="flex flex-col md:flex-row gap-3 mb-3">
         {(["all", "completed", "open", "ongoing"] as ChallengeStatus[]).map(
           (status) => (
