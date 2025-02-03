@@ -12,6 +12,7 @@ import Overview from "./dashboard/Dashboard";
 import Community from "./dashboard/Community";
 import Helpcenter from "./dashboard/Helpcenter";
 import Settings from "./dashboard/Settings";
+import VerifyOtp from "./pages/VerifyOtp";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -38,6 +39,10 @@ export default function App() {
         {
           path: "contact-us",
           element: <ContactUs />,
+        },
+        {
+          path: "verify-email",
+          element: <VerifyOtp />,
         },
       ],
     },

@@ -15,6 +15,32 @@ declare module "express-serve-static-core" {
 class AuthController {
   constructor(private authService: AuthService) {}
 
+  verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, otp } = req.body;
+
+      const user = await this.authService.verifyEmail(email, otp);
+
+      if (!user) {
+        return next(
+          new errorHandler({
+            message: "User not found",
+            statusCode: 404,
+          })
+        );
+      }
+
+      res.status(200).json({
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+        verified: user.verified,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;

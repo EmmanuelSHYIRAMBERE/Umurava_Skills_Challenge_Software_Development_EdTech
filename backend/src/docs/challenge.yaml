@@ -11,16 +11,33 @@ components:
       type: object
       required:
         - title
-        - description
-        - skills
-        - seniority
-        - timeline
+        - deadline
+        - duration
         - moneyPrize
+        - contactEmail
+        - description
+        - projectBrief
+        - projectDescriptionTasks
       properties:
         title:
           type: string
+        deadline:
+          type: string
+          format: date
+        duration:
+          type: string
+        moneyPrize:
+          type: number
+        contactEmail:
+          type: string
         description:
           type: string
+        projectBrief:
+          type: string
+          maxLength: 50
+        projectDescriptionTasks:
+          type: string
+          maxLength: 500
         skills:
           type: array
           items:
@@ -30,22 +47,25 @@ components:
           enum: [Junior, Intermediate, Senior]
         timeline:
           type: number
-        moneyPrize:
-          type: number
         isOpen:
           type: boolean
         type:
           type: string
           enum: [Challenge, Hackathon]
       example:
-        title: "Create a Dashboard for SokoFund"
-        description: "Design a dashboard for the SokoFund fintech platform"
+        title: "Design a Dashboard for SokoFund"
+        deadline: "2024-12-31"
+        duration: "15 days"
+        moneyPrize: 250
+        contactEmail: "admin@sokofund.com"
+        description: "Create a user-friendly fintech dashboard."
+        projectBrief: "UX Dashboard Design"
+        projectDescriptionTasks: "Design and develop a responsive dashboard."
         skills: ["UI/UX Design", "User Research"]
         seniority: "Junior"
         timeline: 15
-        moneyPrize: 250
         isOpen: true
-        type: Challenge
+        type: "Challenge"
 
 tags:
   - name: challengeManagement

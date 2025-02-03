@@ -9,6 +9,7 @@ const authController = new AuthController(authService);
 
 // In your routes file
 authRouter.post("/login", authController.logIn);
+authRouter.post("/verifyEmail", authController.verifyEmail);
 authRouter.post("/change-password", authController.changePassword);
 
 export default authRouter;

@@ -6,6 +6,7 @@ export interface IUser extends Document {
   email: string;
   phone: string;
   password: string;
+  verified: boolean;
   role: "user" | "admin";
   otp: string | null;
   otpexpire: Date | null;
@@ -17,6 +18,7 @@ const UserSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
     password: { type: String, required: true },
+    verified: { type: Boolean, required: true, default: false },
     role: {
       type: String,
       required: true,
