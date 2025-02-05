@@ -24,7 +24,11 @@ declare global {
 (global as any).__basedir = __dirname;
 
 var corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [
+    "http://localhost:5173",
+    "https://umurava-skills-challenge.onrender.com",
+    "https://umurava-skills-challenge-software-u5en.onrender.com",
+  ],
   optionsSuccessStatus: 200, // For legacy browser support
 };
 
