@@ -35,21 +35,27 @@ const ProfileSection: React.FC = () => {
     fetchUserData();
   }, []);
 
-  const fetchUserData = async (): Promise<void> => {
-    try {
-      setIsLoading(true);
-    const user = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user")!)
-      : null;
+ const fetchUserData = async (): Promise<void> => {
+   try {
+     setIsLoading(true);
+     const user = localStorage.getItem("user")
+       ? JSON.parse(localStorage.getItem("user")!)
+       : null;
 
+     // Ensure all properties are defined
+     setUserData({
+       name: user?.name || "",
+       email: user?.email || "",
+       phone: user?.phone || "",
+       emailNotifications: user?.emailNotifications || false,
+     });
+   } catch (error) {
+     console.error("Error fetching user data:", error);
+   } finally {
+     setIsLoading(false);
+   }
+ };
 
-      setUserData(user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, type, checked } = e.target;
@@ -140,7 +146,7 @@ const ProfileSection: React.FC = () => {
                   <InputField
                     icon={User}
                     label="Full Name"
-                    name="fullName"
+                    name="name"
                     value={userData.name}
                     onChange={handleChange}
                   />

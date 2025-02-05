@@ -1,26 +1,28 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaSearch,
   FaBell,
   FaUserCircle,
   FaCog,
-  FaGlobe,
   FaEnvelope,
   FaSignOutAlt,
+  FaRegBell,
 } from "react-icons/fa";
+import axios from "axios";
+import { SERVER_BASE_URL } from "@/constansts/constants";
 
 const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-
+const navigate = useNavigate();
 const user = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user")!)
   : null;
 
-
+const isAdmin = user && user.role === "admin";
 
 
   const toggleNotifications = () => {
@@ -57,7 +59,21 @@ const user = localStorage.getItem("user")
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showNotifications, showProfileDropdown]);
+   const handleLogout = async () => {
+     try {
+      localStorage.clear();
+       const response = await axios.post(`${SERVER_BASE_URL}/api/v1/auth/logout`);
 
+       if (response.status === 200) {
+         localStorage.clear();
+         navigate("/login"); // Redirect to the login page or any other appropriate page
+       } else {
+         console.error("Logout failed");
+       }
+     } catch (error) {
+       console.error("Error during logout:", error);
+     }
+   };
   return (
     <nav className="bg-white px-6 py-4 flex w-full justify-between items-center ">
       <div className="flex items-center ml-10">
@@ -66,14 +82,17 @@ const user = localStorage.getItem("user")
           <input
             type="text"
             placeholder="Search..."
-            className="bg-gray-100 pl-10 pr-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-50 pl-10 pr-48 py-2 p rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
-      <div className="flex items-center space-x-4 mr-10 relative">
-        <div className="relative" ref={notificationRef}>
-          <FaBell
-            className="text-gray-500 hover:text-gray-700 cursor-pointer text-2xl"
+      <div className="flex items-center space-x-4 mr-10 relative ">
+        <div
+          className="relative bg-gray-100 rounded-full p-2"
+          ref={notificationRef}
+        >
+          <FaRegBell
+            className="text-gray-500 hover:text-gray-700 cursor-pointer text-1xl"
             onClick={toggleNotifications}
           />
           {showNotifications && (
@@ -127,19 +146,6 @@ const user = localStorage.getItem("user")
                       </div>
                     </div>
                   </div>
-
-                  {/* Empty State (shown when no notifications) */}
-                 
-                  {/* {false && (
-                    <div className="px-3 py-6 text-center">
-                      <div className="bg-gray-100 rounded-full p-3 w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                        <FaBell className="text-gray-400 text-xl" />
-                      </div>
-                      <p className="text-gray-500 text-sm">
-                        No new notifications
-                      </p>
-                    </div>
-                  )} */}
                 </div>
 
                 {/* Footer */}
@@ -164,10 +170,22 @@ const user = localStorage.getItem("user")
           )}
         </div>
         <div className="relative" ref={profileRef}>
-          <FaUserCircle
-            className="text-gray-500 hover:text-gray-700 cursor-pointer text-2xl"
+          <div
+            className="text-gray-500 hover:text-gray-700 cursor-pointer text-2xl flex items-center justify-center"
             onClick={toggleProfileDropdown}
-          />
+          >
+            {user && user.photo ? (
+              <img
+                src={user.photo}
+                alt={user.name}
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg">
+                {user ? user.name.charAt(0).toUpperCase() : "U"}
+              </div>
+            )}
+          </div>
           {showProfileDropdown && (
             <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-xl transform transition-all duration-200 ease-out">
               <div className="p-3">
@@ -175,21 +193,32 @@ const user = localStorage.getItem("user")
                 <div className="px-3 py-2 mb-2">
                   <div className="flex items-center space-x-3 pb-3 border-b border-gray-100">
                     <div className="bg-blue-100 p-2 rounded-full">
-                      <FaUserCircle className="text-blue-600 text-2xl" />
+                      {user && user.photo ? (
+                        <img
+                          src={user.photo}
+                          alt={user.name}
+                          className="w-8 h-8 rounded-full"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg">
+                          {user ? user.name.charAt(0).toUpperCase() : "U"}
+                        </div>
+                      )}
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-800">{user.name}</h4>
+                      <h4 className="font-semibold text-gray-800">
+                        {user ? user.name : "User"}
+                      </h4>
                       <p className="text-sm text-gray-500">
-                        {user.email}
+                        {user ? user.email : "user@example.com"}
                       </p>
                     </div>
                   </div>
                 </div>
-
                 {/* Navigation Links */}
                 <div className="space-y-1">
                   <Link
-                    to="/profile"
+                    to={isAdmin ? "/admin/settings" : "/dashboard/settings"}
                     className="flex items-center px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-150 group"
                   >
                     <FaUserCircle className="mr-3 text-gray-400 group-hover:text-blue-500" />
@@ -197,20 +226,14 @@ const user = localStorage.getItem("user")
                   </Link>
 
                   <Link
-                    to="/settings"
+                    to={isAdmin ? "/admin/settings" : "/dashboard/settings"}
                     className="flex items-center px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-150 group"
                   >
                     <FaCog className="mr-3 text-gray-400 group-hover:text-blue-500" />
                     <span>Settings</span>
                   </Link>
 
-                  <Link
-                    to="/language"
-                    className="flex items-center px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-150 group"
-                  >
-                    <FaGlobe className="mr-3 text-gray-400 group-hover:text-blue-500" />
-                    <span>Change Language</span>
-                  </Link>
+                
                 </div>
 
                 {/* Divider */}
@@ -219,7 +242,7 @@ const user = localStorage.getItem("user")
                 {/* Sign Out Button */}
                 <button
                   className="flex items-center w-full px-3 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors duration-150 group"
-                  onClick={() => setShowProfileDropdown(false)}
+                  onClick={handleLogout}
                 >
                   <FaSignOutAlt className="mr-3 group-hover:text-red-600" />
                   <span>Sign Out</span>

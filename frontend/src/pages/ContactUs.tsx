@@ -35,7 +35,7 @@ const ContactUs: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen  p-8">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen max-w-5xl mx-auto px-8">
       <div className="w-full md:w-1/2 p-8">
         <h1 className="text-3xl font-bold mb-8 text-center">Contact Us</h1>
         <form
@@ -47,7 +47,7 @@ const ContactUs: React.FC = () => {
               htmlFor="name"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Your Name
+              Names
             </label>
             <input
               type="text"
@@ -64,7 +64,7 @@ const ContactUs: React.FC = () => {
               htmlFor="email"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Your Email
+              Email
             </label>
             <input
               type="email"
