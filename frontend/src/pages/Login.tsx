@@ -31,7 +31,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  
 
   return (
     <div className="mb-4 relative">
@@ -69,7 +68,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -78,7 +77,7 @@ const Login: React.FC = () => {
     name: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -145,7 +144,7 @@ const navigate = useNavigate();
           name: formData.name,
         }
       : { email: formData.email, password: formData.password };
- setIsLoading(true);
+    setIsLoading(true);
     try {
       const response = await axios.post(
         isSignUp
@@ -159,8 +158,12 @@ const navigate = useNavigate();
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
 
-      // Navigate to the dashboard
-      navigate("/dashboard");
+      // Navigate to the dashboard or verify email
+      if (isSignUp) {
+        navigate("/verify-email");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       setErrors((prevErrors) => ({
         ...prevErrors,

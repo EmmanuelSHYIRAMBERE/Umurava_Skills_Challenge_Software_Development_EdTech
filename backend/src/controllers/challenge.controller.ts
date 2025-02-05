@@ -41,6 +41,13 @@ export class ChallengeController {
     }
   );
 
+  public getOpenChallenges = catchAsyncError(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const challenges = await this.challengeService.getOpenChallenges();
+      res.status(200).json({ challenges });
+    }
+  );
+
   public getChallenges = catchAsyncError(
     async (req: Request, res: Response, next: NextFunction) => {
       const challenges = await this.challengeService.getAllChallenges();

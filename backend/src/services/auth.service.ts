@@ -22,11 +22,46 @@ class AuthService {
     };
   }
 
+  async verifyEmail(email: string, otp: string) {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw new errorHandler({ message: "User not found", statusCode: 404 });
+    }
+
+    if (user.otp !== otp) {
+      throw new errorHandler({
+        message: `Dear user the otp entered  ${otp} is not correct`,
+        statusCode: 401,
+      });
+    }
+
+    const currentDateTime = new Date();
+    if (user.otpexpire && currentDateTime > user.otpexpire) {
+      throw new errorHandler({
+        message: `The provided otp has been expired, please try again.`,
+        statusCode: 401,
+      });
+    }
+
+    user.verified = true;
+    await user.save();
+
+    return user;
+  }
+
   async logIn(email: string, password: string) {
     const user = await User.findOne({ email });
 
     if (!user) {
       throw new errorHandler({ message: `User not found`, statusCode: 404 });
+    }
+
+    if (!user.verified) {
+      throw new errorHandler({
+        message: `Please verify your email first.`,
+        statusCode: 401,
+      });
     }
 
     let isPwdMatch = await comparePassword(password, user.password);

@@ -1,29 +1,28 @@
-
 import { useEffect, useState } from "react";
 import LogoImage from "../assets/bluelogo.webp";
 import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
- const [isLoggedIn, setIsLoggedIn] = useState(false);
-   const [userRole, setUserRole] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
- useEffect(() => {
-   const token = localStorage.getItem("token");
-   const user = localStorage.getItem("user")
-     ? JSON.parse(localStorage.getItem("user")!)
-     : null;
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")!)
+      : null;
 
-   console.log("Token:", token);
-   console.log("User Data:", user);
+    console.log("Token:", token);
+    console.log("User Data:", user);
 
-   if (token && user) {
-     setIsLoggedIn(true);
-    
-     setUserRole(user.role);
-   }
- }, []);
-  const isActive = (path:string) => {
+    if (token && user) {
+      setIsLoggedIn(true);
+
+      setUserRole(user.role);
+    }
+  }, []);
+  const isActive = (path: string) => {
     return location.pathname === path ? "active" : "";
   };
 
@@ -66,9 +65,7 @@ const Header = () => {
           <div>
             {isLoggedIn ? (
               <a
-                href={
-                  userRole === "admin" ? "/admin" : "/dashboard"
-                }
+                href={userRole === "admin" ? "/admin" : "/dashboard"}
                 className="bg-[#020B2D] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition-colors duration-200"
               >
                 Dashboard

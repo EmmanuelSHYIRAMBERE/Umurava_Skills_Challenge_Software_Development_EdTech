@@ -18,5 +18,6 @@ userRouter.get(
 userRouter.get("/:id", verifyAccessToken, userControllerInstance.getUserById);
 userRouter.put("/:id", verifyAccessToken, userControllerInstance.updateUser);
 userRouter.delete("/:id", verifyAccessToken, userControllerInstance.deleteUser);
+userRouter.post("/resendToken", userControllerInstance.resendToken);
 
 export default userRouter;
