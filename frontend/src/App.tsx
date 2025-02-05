@@ -7,12 +7,22 @@ import Institution from "./pages/Institution";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./constansts/NotFound";
-import TalentDashboardLayout from "./layout/TalentDashboardLayout";
 import Overview from "./dashboard/Dashboard";
 import Community from "./dashboard/Community";
-import Helpcenter from "./dashboard/Helpcenter";
-import Settings from "./dashboard/Settings";
-import VerifyOtp from "./pages/VerifyOtp";
+import Login from "./pages/Login";
+import DashboardLayout from "./layout/DashboardLayout";
+import AdminView from "./admin/pag/overview/AdminView";
+import AdChallenge from "./admin/pag/challenge/AdChallenge";
+import AdCommunity from "./admin/pag/community/AdCommunity";
+import CreateChallengeForm from "./admin/pag/challenge/CreateChallengeForm";
+import ProjectBrief from "./admin/pag/challenge/ManagerChalleng";
+import MyProfile from "./settings/MyProfile";
+import ProtectedRoute from "./constansts/ProtectedRoute";
+import ErrorBoundary from "./constansts/ErrBoundary";
+import HomeChallenge from "./pages/Challenge";
+import HelpCenter from "./helpcenter/HelpCenter";
+import Settings from "./settings/Settings";
+import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -26,7 +36,7 @@ export default function App() {
         },
         {
           path: "challenge",
-          element: <ChallengeAndHackathons />,
+          element: <HomeChallenge />,
         },
         {
           path: "learning",
@@ -41,6 +51,10 @@ export default function App() {
           element: <ContactUs />,
         },
         {
+          path: "login",
+          element: <Login />,
+        },
+        {
           path: "verify-email",
           element: <VerifyOtp />,
         },
@@ -48,7 +62,11 @@ export default function App() {
     },
     {
       path: "dashboard",
-      element: <TalentDashboardLayout />,
+      element: (
+        <ProtectedRoute allowedRoles={["user"]}>
+          <DashboardLayout />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: "",
@@ -73,7 +91,7 @@ export default function App() {
         },
         {
           path: "help-center",
-          element: <Helpcenter />,
+          element: <HelpCenter />,
         },
         {
           path: "settings",
@@ -83,8 +101,49 @@ export default function App() {
     },
 
     {
+      path: "admin",
+      element: (
+        <ProtectedRoute allowedRoles={["admin"]}>
+          <DashboardLayout />
+        </ProtectedRoute>
+      ),
+      children: [
+        { path: "", element: <AdminView /> },
+        {
+          path: "challenges",
+          element: <AdChallenge />,
+        },
+        {
+          path: "challenges/create",
+          element: <CreateChallengeForm />,
+        },
+        {
+          path: "manage-challenge",
+          element: <ProjectBrief />,
+        },
+        {
+          path: "community",
+          element: <AdCommunity />,
+        },
+        {
+          path: "help-center",
+          element: <AdminSupportDashboard />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
+        },
+        {
+          path: "profile",
+          element: <MyProfile />,
+        },
+      ],
+    },
+
+    {
       path: "*",
       element: <NotFound />,
+      errorElement: <ErrorBoundary />,
     },
   ]);
 

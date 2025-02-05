@@ -75,7 +75,7 @@ export default function ChallengeAndHackathons() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container px-8 ml-8">
       {/* Header */}
       <div className="mb-4">
         <h1 className="text-lg font-bold">Challenges</h1>
@@ -84,7 +84,7 @@ export default function ChallengeAndHackathons() {
         </p>
       </div>
 
-      {/* Challenge Status Cards */}
+    
       <div className="flex flex-col md:flex-row gap-3 mb-3">
         {(["all", "completed", "open", "ongoing"] as ChallengeStatus[]).map(
           (status) => (
