@@ -11,6 +11,7 @@ challengeRouter.post(
   verifyAccessToken,
   challengeControllerInstance.createChallenge
 );
+challengeRouter.get("/open", challengeControllerInstance.getOpenChallenges);
 challengeRouter.get(
   "/",
   verifyAccessToken,

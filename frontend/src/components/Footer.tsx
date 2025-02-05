@@ -2,7 +2,7 @@ import log1 from "../assets/CareerTicket_4x-removebg-preview 1.png"
 import { FaFacebookF, FaGooglePlusG, FaLinkedinIn,  FaYoutube } from "react-icons/fa";
 const Footer = () => {
   return (
-    <footer className="bg-[#011b40] text-white py-16">
+    <footer className="bg-[#011b40] text-white py-4">
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 border-b border-gray-700 mb-8">
           <div className="flex items-center">
@@ -13,7 +13,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-800 bg-white rounded-full p-2"
+              className="text-gray-600 hover:text-gray-800  bg-white rounded-full p-2"
             >
               <FaFacebookF className="h-6 w-6" />
             </a>
@@ -46,8 +46,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Address Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Our Address</h3>
-            <div className="space-y-4">
+            <h3 className="text-lg font-semibold mb-4">Our Address</h3>
+            <div className="space-y-2">
               <div className="flex items-center">
                 <svg
                   className="w-5 h-5 mr-3"
@@ -107,8 +107,8 @@ const Footer = () => {
 
           {/* Quick Links Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
               <li>
                 <a href="/" className="hover:text-blue-400 transition-colors">
                   Home
@@ -143,7 +143,7 @@ const Footer = () => {
 
           {/* Newsletter Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">
+            <h3 className="text-lg font-semibold mb-4">
               Join our newsletter to keep up to date with us!
             </h3>
             <div className="flex">
@@ -160,7 +160,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-gray-700">
+        <div className="mt-8 pt-4 border-t border-gray-700">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-gray-400">
               Copyright © All Rights Reserved SawaPay 2024.

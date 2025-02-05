@@ -13,14 +13,8 @@ export default function HomeChallenge() {
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
-        const token = localStorage.getItem("token");
         const response = await axios.get(
-          `${SERVER_BASE_URL}/api/v1/challenges`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `${SERVER_BASE_URL}/api/v1/challenges/open`
         );
 
         setChallenges(response.data.challenges);
@@ -38,7 +32,7 @@ export default function HomeChallenge() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Oval color="#00BFFF" height={40} width={40} /> 
+        <Oval color="#00BFFF" height={40} width={40} />
       </div>
     );
   }
@@ -52,7 +46,7 @@ export default function HomeChallenge() {
       {challenges.length === 0 ? (
         <div>No available challenges.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 min-h-screen max-w-6xl mx-auto">
           {challenges.map((challenge) => (
             <HomeChallengeCard key={challenge._id} challenge={challenge} />
           ))}

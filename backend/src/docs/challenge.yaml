@@ -1,4 +1,3 @@
-# src/docs/challenge.yaml
 components:
   securitySchemes:
     BearerAuth:
@@ -11,41 +10,59 @@ components:
       type: object
       required:
         - title
-        - description
-        - skills
-        - seniority
-        - timeline
-        - moneyPrize
       properties:
         title:
           type: string
-        description:
+        deadline:
           type: string
-        skills:
+          format: date
+        duration:
+          type: string
+        moneyPrize:
+          type: number
+        contactEmail:
+          type: string
+        projectDescription:
+          type: string
+        projectBrief:
+          type: string
+          maxLength: 50
+        projectDescriptionTasks:
+          type: string
+          maxLength: 500
+        skillsNeeded:
           type: array
           items:
             type: string
         seniority:
           type: string
           enum: [Junior, Intermediate, Senior]
-        timeline:
-          type: number
-        moneyPrize:
-          type: number
         isOpen:
           type: boolean
         type:
           type: string
           enum: [Challenge, Hackathon]
+        keyInstructions:
+          type: string
+        participants:
+          type: array
+          items:
+            type: string
       example:
-        title: "Create a Dashboard for SokoFund"
-        description: "Design a dashboard for the SokoFund fintech platform"
-        skills: ["UI/UX Design", "User Research"]
-        seniority: "Junior"
-        timeline: 15
-        moneyPrize: 250
+        title: "Challenge 1"
+        deadline: "2022-12-31"
+        duration: "1 month"
+        moneyPrize: 1000
+        contactEmail: "OYhBp@example.com"
+        projectDescription: "Description of the project"
+        projectBrief: "Brief description of the project"
+        projectDescriptionTasks: "Tasks of the project"
+        skillsNeeded: ["skill1", "skill2"]
+        seniority: "Intermediate"
         isOpen: true
-        type: Challenge
+        type: "Challenge"
+        keyInstructions: "Instructions for the challenge"
+        participants: ["participant1", "participant2"]
 
 tags:
   - name: challengeManagement
@@ -96,6 +113,22 @@ paths:
                   $ref: "#/components/schemas/challenge"
         "401":
           description: Unauthorized, authentication error
+        "500":
+          description: Internal server error
+  /api/v1/challenges/open:
+    get:
+      summary: Get open challenges
+      tags: [challengeManagement]
+      description: Retrieve all open challenges from the system
+      responses:
+        "200":
+          description: Successfully retrieved open challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/challenge"
         "500":
           description: Internal server error
 

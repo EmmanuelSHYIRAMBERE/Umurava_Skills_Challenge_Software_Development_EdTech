@@ -26,6 +26,7 @@ import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
 import ViewOne from "./pages/ViewOne";
 
 
+import VerifyOtp from "./pages/VerifyOtp";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ export default function App() {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "verify-email",
+          element: <VerifyOtp />,
         },
       ],
     },

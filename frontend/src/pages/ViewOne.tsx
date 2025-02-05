@@ -55,10 +55,13 @@ const ViewOne: React.FC = () => {
     },
     {
       icon: <DollarSign className="text-blue-600" />,
-      title: challenge?.moneyPrize || "Not Specified",
+      title: challenge?.moneyPrize
+        ? `${challenge.moneyPrize}`
+        : "Not Specified",
       subtitle: "Money Prize",
     },
   ];
+
   useEffect(() => {
     const fetchChallengeDetails = async () => {
       try {

@@ -22,8 +22,13 @@ import {
   FaChalkboardTeacher,
 } from "react-icons/fa";
 import GetStarted from "./comp/HowToGetStarted";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const handleGetStarted = () => {
+  navigate("/login");
+  };
   return (
     <>
       <div className="items-center justify-center min-h-screen max-w-6xl mx-auto">
@@ -37,7 +42,7 @@ export default function Home() {
                 Enhance employability and accelerate career growth by working on
                 hands-on projects & hackathons from businesses & organizations.
               </p>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 mt-14  rounded">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 mt-14  rounded" onClick={handleGetStarted}>
                 Get Started
               </button>
             </div>

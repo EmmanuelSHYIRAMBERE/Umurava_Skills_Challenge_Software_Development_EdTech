@@ -3,6 +3,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
   email: string;
@@ -31,7 +33,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  
 
   return (
     <div className="mb-4 relative">
@@ -69,7 +70,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -78,7 +79,7 @@ const Login: React.FC = () => {
     name: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -145,7 +146,7 @@ const navigate = useNavigate();
           name: formData.name,
         }
       : { email: formData.email, password: formData.password };
- setIsLoading(true);
+    setIsLoading(true);
     try {
       const response = await axios.post(
         isSignUp
@@ -159,13 +160,20 @@ const navigate = useNavigate();
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
 
-      // Navigate to the dashboard
-      navigate("/dashboard");
+      // Navigate to the dashboard or verify email
+      if (isSignUp) {
+        navigate("/verify-email");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        api: "An error occurred. Please try again.",
-      }));
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -173,8 +181,8 @@ const navigate = useNavigate();
   };
 
   return (
-    <div className="flex justify-center items-center h-screen  bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg mt-8 shadow-md">
+    <div className="flex justify-center items-center  bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md my-20">
         <div className="flex justify-between mb-6">
           <button
             type="button"
@@ -274,8 +282,6 @@ const navigate = useNavigate();
             </>
           )}
 
-          {errors.api && <p className="text-red-500 mb-4">{errors.api}</p>}
-
           <button
             type="submit"
             disabled={isLoading}
@@ -295,6 +301,7 @@ const navigate = useNavigate();
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
