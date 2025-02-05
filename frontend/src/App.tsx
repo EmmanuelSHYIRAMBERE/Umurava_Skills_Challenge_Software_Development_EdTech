@@ -23,6 +23,7 @@ import HomeChallenge from "./pages/Challenge";
 import HelpCenter from "./helpcenter/HelpCenter";
 import Settings from "./settings/Settings";
 import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
+import VerifyOtp from "./pages/VerifyOtp";
 
 export default function App() {
   const router = createBrowserRouter([

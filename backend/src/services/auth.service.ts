@@ -57,6 +57,13 @@ class AuthService {
       throw new errorHandler({ message: `User not found`, statusCode: 404 });
     }
 
+    if (!user.verified) {
+      throw new errorHandler({
+        message: `Please verify your email first.`,
+        statusCode: 401,
+      });
+    }
+
     let isPwdMatch = await comparePassword(password, user.password);
 
     if (!isPwdMatch) {

@@ -7,15 +7,16 @@ export interface IChallenge extends Document {
   duration: string;
   moneyPrize: number;
   contactEmail: string;
-  description: string;
+  projectDescription: string;
   projectBrief: string;
   projectDescriptionTasks: string;
-  skills: string[];
+  skillsNeeded: string[];
   seniority: "Junior" | "Intermediate" | "Senior";
-  timeline: number;
   isOpen: boolean;
   status: "open" | "completed";
   type: "Challenge" | "Hackathon";
+  keyInstructions: string;
+  participants: Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,19 +28,20 @@ const ChallengeSchema = new Schema<IChallenge>(
     duration: { type: String, required: true },
     moneyPrize: { type: Number, required: true },
     contactEmail: { type: String, required: true },
-    description: { type: String },
+    projectDescription: { type: String },
     projectBrief: { type: String, required: true, maxlength: 50 },
     projectDescriptionTasks: { type: String, required: true, maxlength: 500 },
-    skills: [{ type: String }],
+    skillsNeeded: [{ type: String }],
     seniority: {
       type: String,
       required: true,
       enum: ["Junior", "Intermediate", "Senior"],
     },
-    timeline: { type: Number },
     isOpen: { type: Boolean, default: true },
     status: { type: String, enum: ["open", "completed"], default: "open" },
     type: { type: String, required: true, enum: ["Challenge", "Hackathon"] },
+    keyInstructions: { type: String, required: true },
+    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

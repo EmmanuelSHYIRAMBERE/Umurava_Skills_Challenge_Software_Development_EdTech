@@ -196,10 +196,12 @@ export class userController {
 
       res.status(201).json({
         message: "User created. Please check your email for verification.",
-        userId: newUser._id,
-        email: newUser.email,
-        name: newUser.name,
-        role: newUser.role,
+        user: {
+          userId: newUser._id,
+          email: newUser.email,
+          name: newUser.name,
+          role: newUser.role,
+        },
       });
     }
   );

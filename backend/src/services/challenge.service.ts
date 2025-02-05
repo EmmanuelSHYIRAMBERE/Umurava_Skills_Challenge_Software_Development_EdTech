@@ -6,6 +6,11 @@ export class ChallengeService {
     return newChallenge;
   }
 
+  public async getOpenChallenges() {
+    const openChallenges = await Challenge.find({ isOpen: true });
+    return openChallenges;
+  }
+
   public async getAllChallenges() {
     const allChallenges = await Challenge.find({});
     return allChallenges;
