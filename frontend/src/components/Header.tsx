@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import LogoImage from "../assets/bluelogo.webp";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
@@ -15,16 +15,16 @@ const Header = () => {
 
     if (token && user) {
       setIsLoggedIn(true);
-
       setUserRole(user.role);
     }
   }, []);
+
   const isActive = (path: string) => {
     return location.pathname === path ? "active" : "";
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 py-2 border-b border-gray-200 bg-white">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -35,45 +35,51 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="/" className={`nav-link ${isActive("/")}`}>
+            <Link to="/" className={`nav-link ${isActive("/")}`}>
               Home
-            </a>
-            <a
-              href="/challenge"
-              className={`nav-link ${isActive("/available-challenge")}`}
+            </Link>
+            <Link
+              to="/challenge"
+              className={`nav-link ${isActive("/challenge")}`}
             >
               Challenge & Hackthons
-            </a>
-            <a href="/learning" className={`nav-link ${isActive("/learning")}`}>
+            </Link>
+            <Link
+              to="/learning"
+              className={`nav-link ${isActive("/learning")}`}
+            >
               For Learning institutions
-            </a>
-            <a href="/about-us" className={`nav-link ${isActive("/about-us")}`}>
+            </Link>
+            <Link
+              to="/about-us"
+              className={`nav-link ${isActive("/about-us")}`}
+            >
               About Us
-            </a>
-            <a
-              href="/contact-us"
+            </Link>
+            <Link
+              to="/contact-us"
               className={`nav-link ${isActive("/contact-us")}`}
             >
               Contact Us
-            </a>
+            </Link>
           </nav>
 
           {/* Join Button */}
           <div>
             {isLoggedIn ? (
-              <a
-                href={userRole === "admin" ? "/admin" : "/dashboard"}
+              <Link
+                to={userRole === "admin" ? "/admin" : "/dashboard"}
                 className="bg-[#020B2D] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition-colors duration-200"
               >
                 Dashboard
-              </a>
+              </Link>
             ) : (
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 className="bg-[#020B2D] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition-colors duration-200"
               >
                 Join the Program
-              </a>
+              </Link>
             )}
           </div>
 

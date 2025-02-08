@@ -13,6 +13,9 @@ export interface Challenge {
   seniority: string;
   status: "Completed" | "Open" | "Ongoing";
   timeline: string;
+  _id?: string;
+  description?: string;
+  moneyPrize?: number;
 }
 export interface ChallengeCount {
   status: "Completed" | "Open" | "Ongoing";

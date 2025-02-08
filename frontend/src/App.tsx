@@ -23,6 +23,9 @@ import HomeChallenge from "./pages/Challenge";
 import HelpCenter from "./helpcenter/HelpCenter";
 import Settings from "./settings/Settings";
 import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
+import ViewOne from "./pages/ViewOne";
+
+
 import VerifyOtp from "./pages/VerifyOtp";
 
 export default function App() {
@@ -37,7 +40,17 @@ export default function App() {
         },
         {
           path: "challenge",
-          element: <HomeChallenge />,
+
+          children: [
+            {
+              path: "",
+              element: <HomeChallenge />,
+            },
+            {
+              path: ":id",
+              element: <ViewOne />,
+            },
+          ],
         },
         {
           path: "learning",
@@ -104,15 +117,25 @@ export default function App() {
     {
       path: "admin",
       element: (
-        <ProtectedRoute allowedRoles={["admin"]}>
+        <ProtectedRoute allowedRoles={["admin","user"]}>
           <DashboardLayout />
         </ProtectedRoute>
       ),
       children: [
         { path: "", element: <AdminView /> },
         {
-          path: "challenges",
-          element: <AdChallenge />,
+          path: "challenge-and-hackathons",
+
+          children: [
+            {
+              path: "",
+              element: <AdChallenge />,
+            },
+            {
+              path: ":id",
+              element: <ProjectBrief />,
+            },
+          ],
         },
         {
           path: "challenges/create",

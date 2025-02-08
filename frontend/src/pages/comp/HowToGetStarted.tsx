@@ -36,7 +36,7 @@ const GetStartedSection = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16 mb-16">
+    <div className="max-w-6xl mx-auto ml-10 px-4 py-16 mb-16 ">
       <h1 className="text-4xl font-bold text-center mb-20 text-gray-900">
         How to Get Started
       </h1>
