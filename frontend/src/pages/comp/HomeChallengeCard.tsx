@@ -4,11 +4,7 @@ import logo from "../../assets/White Logo.png";
 import { Challenge } from "@/types/challenge";
 import { Link } from "react-router-dom";
 
-const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
-    const user = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user")!)
-      : null;
-    const isAdmin = user && user.role === "admin";
+const HomeChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100">
       <div className="bg-white  w-full max-w-md px-4 pt-4 ">
@@ -64,13 +60,7 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
         {/* Footer Section */}
       </div>
       <div className="p-3 border-t border-gray-100">
-        <Link
-          to={
-            isAdmin
-              ? `/admin/challenge-and-hackathons/${challenge.id}`
-              : `/dashboard/challenge-and-hackathons/${challenge.id}`
-          }
-        >
+        <Link to={`/challenge/${challenge._id}`}>
           <Button
             variant="default"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4"
@@ -83,4 +73,4 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
   );
 };
 
-export default ChallengeCard;
+export default HomeChallengeCard;

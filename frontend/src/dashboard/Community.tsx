@@ -35,7 +35,7 @@ const Community = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-8 ml-8">
       <WhatsAppModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

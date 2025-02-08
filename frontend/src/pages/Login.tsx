@@ -3,6 +3,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
   email: string;
@@ -165,10 +167,13 @@ const Login: React.FC = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        api: "An error occurred. Please try again.",
-      }));
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -176,8 +181,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen  bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg mt-8 shadow-md">
+    <div className="flex justify-center items-center  bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md my-20">
         <div className="flex justify-between mb-6">
           <button
             type="button"
@@ -277,8 +282,6 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {errors.api && <p className="text-red-500 mb-4">{errors.api}</p>}
-
           <button
             type="submit"
             disabled={isLoading}
@@ -298,6 +301,7 @@ const Login: React.FC = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
