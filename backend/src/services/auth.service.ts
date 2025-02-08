@@ -34,7 +34,7 @@ class AuthService {
       let message = {
         from: `UMURAVA - Build Work Experience through Skills Challenges Program<${process.env.GOOGLE_EMAIL}>`,
         to: user.email,
-        subject: "UMURAVA Password Reset Request",
+        subject: "Password Reset Request",
         html: `
         <!DOCTYPE html>
 <html dir="ltr" lang="en">
