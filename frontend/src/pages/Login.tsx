@@ -153,7 +153,6 @@ const Login: React.FC = () => {
         apiData
       );
       alert("Success!");
-      console.log("response", response);
       // Store user data and token in local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);

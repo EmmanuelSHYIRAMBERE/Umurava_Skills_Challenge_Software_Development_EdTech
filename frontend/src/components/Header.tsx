@@ -13,9 +13,6 @@ const Header = () => {
       ? JSON.parse(localStorage.getItem("user")!)
       : null;
 
-    console.log("Token:", token);
-    console.log("User Data:", user);
-
     if (token && user) {
       setIsLoggedIn(true);
 
