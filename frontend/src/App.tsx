@@ -13,7 +13,7 @@ import Login from "./pages/Login";
 import DashboardLayout from "./layout/DashboardLayout";
 import AdminView from "./admin/pag/overview/AdminView";
 import AdChallenge from "./admin/pag/challenge/AdChallenge";
-import AdCommunity from "./admin/pag/community/AdCommunity";
+
 import CreateChallengeForm from "./admin/pag/challenge/CreateChallengeForm";
 import ProjectBrief from "./admin/pag/challenge/ManagerChalleng";
 import MyProfile from "./settings/MyProfile";
@@ -24,7 +24,6 @@ import HelpCenter from "./helpcenter/HelpCenter";
 import Settings from "./settings/Settings";
 import AdminSupportDashboard from "./helpcenter/AdminSupportDashboard";
 import ViewOne from "./pages/ViewOne";
-
 
 import VerifyOtp from "./pages/VerifyOtp";
 
@@ -68,16 +67,16 @@ export default function App() {
           path: "login",
           element: <Login />,
         },
-        {
-          path: "verify-email",
-          element: <VerifyOtp />,
-        },
       ],
+    },
+    {
+      path: "verify-email",
+      element: <VerifyOtp />,
     },
     {
       path: "dashboard",
       element: (
-        <ProtectedRoute allowedRoles={["user"]}>
+        <ProtectedRoute allowedRoles={["user", "admin"]}>
           <DashboardLayout />
         </ProtectedRoute>
       ),
@@ -117,24 +116,24 @@ export default function App() {
     {
       path: "admin",
       element: (
-        <ProtectedRoute allowedRoles={["admin","user"]}>
+        <ProtectedRoute allowedRoles={["admin", "user"]}>
           <DashboardLayout />
         </ProtectedRoute>
       ),
       children: [
         { path: "", element: <AdminView /> },
         {
-          path: "challenge-and-hackathons",
+          path: "challenges",
 
           children: [
             {
               path: "",
               element: <AdChallenge />,
             },
-            {
-              path: ":id",
-              element: <ProjectBrief />,
-            },
+            // {
+            //   path: ":id",
+            //   element: <ProjectBrief />,
+            // },
           ],
         },
         {
@@ -142,12 +141,12 @@ export default function App() {
           element: <CreateChallengeForm />,
         },
         {
-          path: "manage-challenge",
+          path: "/admin/challenges/:_id",
           element: <ProjectBrief />,
         },
         {
           path: "community",
-          element: <AdCommunity />,
+          element: <Community />,
         },
         {
           path: "help-center",

@@ -35,7 +35,7 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
           <div className="space-y-2">
             <div className="font-sans font-bold text-xs">Skills Needed: </div>
             <div className="flex flex-wrap items-center gap-1">
-              {challenge.skills.map((skill, index) => (
+              {challenge.skillsNeeded.map((skill, index) => (
                 <span
                   key={index}
                   className="text-blue-600 bg-blue-50 px-2 py-1 rounded-full text-sm"
@@ -56,7 +56,7 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
             </div>
             <div className="flex">
               <span className="font-bold">Timeline: </span>
-              <span className="text-gray-600 pl-1">{challenge.timeline}</span>
+              <span className="text-gray-600 pl-1">{challenge.duration}</span>
             </div>
           </div>
         </div>
@@ -67,8 +67,8 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
         <Link
           to={
             isAdmin
-              ? `/admin/challenge-and-hackathons/${challenge.id}`
-              : `/dashboard/challenge-and-hackathons/${challenge.id}`
+              ? `/admin/challenges/${challenge._id}`
+              : `/dashboard/challenge-and-hackathons/${challenge._id}`
           }
         >
           <Button

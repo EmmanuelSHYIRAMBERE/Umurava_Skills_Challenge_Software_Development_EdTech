@@ -36,9 +36,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <div className="mb-4 relative">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <label className="block text-gray-700">{label}</label>
-        {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm ml-2 ">{error}</p>}
       </div>
       <div className="relative flex items-center">
         <input
@@ -154,7 +154,7 @@ const Login: React.FC = () => {
           : `${SERVER_BASE_URL}/api/v1/auth/login`,
         apiData
       );
-      alert("Success!");
+     toast.success("Success!");
       console.log("response", response);
       // Store user data and token in local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));

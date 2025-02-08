@@ -123,7 +123,7 @@ const VerifyOtp = () => {
           </div>
           <p className="text-gray-700 text-lg font-medium">Enter OTP Code</p>
           <p className="text-gray-500 text-sm">
-            We have sent an OTP to your email
+            We have sent an OTP to your email:
             <span className="font-semibold">{userData && userData.email}</span>.
             Please check your inbox.
           </p>

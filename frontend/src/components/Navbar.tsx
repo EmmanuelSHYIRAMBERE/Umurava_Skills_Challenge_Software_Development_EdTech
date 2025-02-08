@@ -9,8 +9,7 @@ import {
   FaSignOutAlt,
   FaRegBell,
 } from "react-icons/fa";
-import axios from "axios";
-import { SERVER_BASE_URL } from "@/constansts/constants";
+
 
 const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -62,14 +61,14 @@ const isAdmin = user && user.role === "admin";
    const handleLogout = async () => {
      try {
       localStorage.clear();
-       const response = await axios.post(`${SERVER_BASE_URL}/api/v1/auth/logout`);
+      //  const response = await axios.post(`${SERVER_BASE_URL}/api/v1/auth/logout`);
 
-       if (response.status === 200) {
-         localStorage.clear();
+      //  if (response.status === 200) {
+      //    localStorage.clear();
          navigate("/login"); // Redirect to the login page or any other appropriate page
-       } else {
-         console.error("Logout failed");
-       }
+      //  } else {
+      //    console.error("Logout failed");
+      //  }
      } catch (error) {
        console.error("Error during logout:", error);
      }

@@ -1,15 +1,77 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import log from "../../../assets/White Logo.png";
 import { Mail, Palette, Calendar, DollarSign, ChevronLeft } from "lucide-react";
 import ParticipantsList from "./ParticipantList";
+import axios from "axios";
+import { SERVER_BASE_URL } from "@/constansts/constants";
+import { useEffect, useState } from "react";
 
+interface ProjectData {
+  title: string;
+  description: string;
+  tasks: string;
+  deliverables: string;
+  additionalDeliverables: string;
+  note: string;
+  keyInstructions: string;
+  contactEmail: string;
+  category: string;
+  duration: string;
+  moneyPrize: string;
+}
 const ProjectBrief = () => {
-  const navigate = useNavigate();
+    const [projectData, setProjectData] = useState<ProjectData | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
+    const { _id } = useParams<{ _id: string }>(); 
+
+    useEffect(() => {
+      const fetchProjectData = async () => {
+        const token = localStorage.getItem("token");
+        try {
+           if (!_id) {
+             setError("No ID provided.");
+             setLoading(false);
+             return;
+           }
+          const response = await axios.get(
+            `${SERVER_BASE_URL}/api/v1/challenges/${_id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("response.data.challenge",response.data.challenge);
+          setProjectData(response.data.challenge);
+        } catch (err) {
+          setError("Failed to fetch project data.");
+          console.log("error",err)
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchProjectData();
+    }, [_id]);
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>{error}</div>;
+    }
+
+    if (!projectData) {
+      return <div>No challenge data available.</div>;
+    }
   return (
     <>
-      {" "}
       <div className="border-b border-t p-4 ml-8 mb-6">
         <div className="max-w-7xl mx-auto flex items-center space-x-2 text-sm">
           <button
@@ -40,13 +102,13 @@ const ProjectBrief = () => {
           <Card className="overflow-hidden">
             {/* Header Image */}
             <div className="bg-blue-600 p-14 flex justify-center items-center">
-             <img src={log} alt="log" />
+              <img src={log} alt="log" />
             </div>
 
             <CardContent className="p-8">
               {/* Project Title */}
               <h2 className="text-2xl font-bold mb-6">
-                Project Brief : Payroll and HR Management System
+                Project Brief : {projectData.title}
               </h2>
 
               {/* Project Description */}
