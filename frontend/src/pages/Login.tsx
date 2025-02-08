@@ -12,6 +12,7 @@ interface FormData {
   confirmPassword: string;
   phone: string;
   name: string;
+  role: "user" | "admin";
 }
 
 interface PasswordInputProps {
@@ -21,6 +22,7 @@ interface PasswordInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   error: string;
+
 }
 
 // Password Input component with toggle functionality
@@ -77,11 +79,14 @@ const Login: React.FC = () => {
     confirmPassword: "",
     phone: "",
     name: "",
+    role: "user",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -144,6 +149,7 @@ const Login: React.FC = () => {
           password: formData.password,
           phone: formData.phone,
           name: formData.name,
+          role: formData.role,
         }
       : { email: formData.email, password: formData.password };
     setIsLoading(true);
@@ -257,6 +263,23 @@ const Login: React.FC = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                 />
+              </div>
+              <div className="mb-4">
+                <div className="flex items-center justify-between">
+                  <label className="block text-gray-700">Role</label>
+                  {errors.role && (
+                    <p className="text-red-500 text-sm ml-2">{errors.role}</p>
+                  )}
+                </div>
+                <select
+                  name="role"
+                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  value={formData.role}
+                  onChange={ handleInputChange}
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
               </div>
             </>
           )}
