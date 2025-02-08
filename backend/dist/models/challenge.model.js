@@ -35,20 +35,43 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Challenge = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+// Subtask Schema
+const SubtaskSchema = new mongoose_1.Schema({
+    title: { type: String, required: true },
+    description: { type: String },
+    url: { type: String },
+    note: { type: String },
+});
+// Task Schema
+const TaskSchema = new mongoose_1.Schema({
+    title: { type: String, required: true },
+    description: { type: String },
+    subtasks: [SubtaskSchema],
+    url: { type: String },
+    note: { type: String },
+});
+// Main Challenge Schema
 const ChallengeSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
-    description: { type: String, required: true },
-    skills: [{ type: String }],
+    deadline: { type: Date, required: true },
+    duration: { type: String, required: true },
+    moneyPrize: { type: Number, required: true },
+    contactEmail: { type: String, required: true },
+    projectDescription: { type: String },
+    projectBrief: { type: String, required: true, maxlength: 50 },
+    projectDescriptionTasks: { type: String, required: true, maxlength: 500 },
+    tasks: [TaskSchema],
+    skillsNeeded: [{ type: String }],
     seniority: {
         type: String,
         required: true,
         enum: ["Junior", "Intermediate", "Senior"],
     },
-    timeline: { type: Number, required: true },
-    moneyPrize: { type: Number, required: true },
     isOpen: { type: Boolean, default: true },
     status: { type: String, enum: ["open", "completed"], default: "open" },
     type: { type: String, required: true, enum: ["Challenge", "Hackathon"] },
+    keyInstructions: { type: String, required: true },
+    participants: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
 }, { timestamps: true });
 exports.Challenge = mongoose_1.default.model("Challenge", ChallengeSchema);
 //# sourceMappingURL=challenge.model.js.map

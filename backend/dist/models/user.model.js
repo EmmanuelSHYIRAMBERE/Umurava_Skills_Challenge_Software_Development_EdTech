@@ -40,6 +40,7 @@ const UserSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
     password: { type: String, required: true },
+    verified: { type: Boolean, required: true, default: false },
     role: {
         type: String,
         required: true,

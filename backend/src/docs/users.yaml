@@ -164,3 +164,31 @@ paths:
           description: User not found
         "500":
           description: Internal server error
+
+  /api/v1/user/resendToken:
+    post:
+      summary: Resend verification token
+      tags: [userManagement]
+      description: Resend a verification token to a user's email.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email address of the user
+              required:
+                - email
+      responses:
+        "200":
+          description: Verification email sent successfully
+        "400":
+          description: Bad request, validation error
+        "404":
+          description: User not found
+        "500":
+          description: Internal server error

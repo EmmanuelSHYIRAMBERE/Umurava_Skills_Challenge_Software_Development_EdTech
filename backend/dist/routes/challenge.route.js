@@ -9,6 +9,7 @@ const tokenverification_middleware_1 = require("../middlewares/tokenverification
 const challengeRouter = express_1.default.Router();
 const challengeControllerInstance = new challenge_controller_1.ChallengeController();
 challengeRouter.post("/", tokenverification_middleware_1.verifyAccessToken, challengeControllerInstance.createChallenge);
+challengeRouter.get("/open", challengeControllerInstance.getOpenChallenges);
 challengeRouter.get("/", tokenverification_middleware_1.verifyAccessToken, challengeControllerInstance.getChallenges);
 challengeRouter.get("/:id", tokenverification_middleware_1.verifyAccessToken, challengeControllerInstance.getChallengeById);
 challengeRouter.put("/:id", tokenverification_middleware_1.verifyAccessToken, challengeControllerInstance.updateChallenge);
