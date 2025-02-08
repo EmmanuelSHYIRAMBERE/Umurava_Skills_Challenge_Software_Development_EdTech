@@ -6,6 +6,40 @@ components:
       bearerFormat: JWT
 
   schemas:
+    subtask:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        note:
+          type: string
+
+    task:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        subtasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/subtask"
+        url:
+          type: string
+          format: uri
+        note:
+          type: string
+
     challenge:
       type: object
       required:
@@ -30,6 +64,10 @@ components:
         projectDescriptionTasks:
           type: string
           maxLength: 500
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/task"
         skillsNeeded:
           type: array
           items:
@@ -49,20 +87,49 @@ components:
           items:
             type: string
       example:
-        title: "Challenge 1"
-        deadline: "2022-12-31"
-        duration: "1 month"
-        moneyPrize: 1000
-        contactEmail: "OYhBp@example.com"
-        projectDescription: "Description of the project"
-        projectBrief: "Brief description of the project"
-        projectDescriptionTasks: "Tasks of the project"
-        skillsNeeded: ["skill1", "skill2"]
+        title: "Payroll and HR Management System"
+        deadline: "2024-03-15"
+        duration: "7 Days"
+        moneyPrize: 4500
+        contactEmail: "talent@umurava.africa"
+        projectDescription: "A FinTech company that is developing a Digital Financial Platform designed to integrate with existing HR and payroll system"
+        projectBrief: "Payroll and HR Management System"
+        projectDescriptionTasks: "Design and develop a comprehensive HR and payroll management system"
+        tasks:
+          [
+            {
+              title: "Product Requirements",
+              subtasks:
+                [
+                  { title: "UI research to understand Project Requirements" },
+                  {
+                    title: "Market Analysis",
+                    url: "https://example.com/market-analysis",
+                    note: "Focus on competitors in African market",
+                  },
+                ],
+            },
+            {
+              title: "Product Design",
+              subtasks:
+                [
+                  {
+                    title: "User Interface Design",
+                    description: "Design mobile-first interface",
+                  },
+                  {
+                    title: "Create wireframes",
+                    note: "Include both desktop and mobile views",
+                  },
+                ],
+            },
+          ]
+        skillsNeeded: ["UI/UX Design", "Product Design", "Web Design"]
         seniority: "Intermediate"
         isOpen: true
         type: "Challenge"
-        keyInstructions: "Instructions for the challenge"
-        participants: ["participant1", "participant2"]
+        keyInstructions: "Design a user-friendly interface for HR and payroll management"
+        participants: []
 
 tags:
   - name: challengeManagement
@@ -115,6 +182,7 @@ paths:
           description: Unauthorized, authentication error
         "500":
           description: Internal server error
+
   /api/v1/challenges/open:
     get:
       summary: Get open challenges
