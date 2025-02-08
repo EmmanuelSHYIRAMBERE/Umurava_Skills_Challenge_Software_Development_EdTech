@@ -16,6 +16,27 @@ const errorhandler_utils_1 = __importDefault(require("../utils/errorhandler.util
 class AuthController {
     constructor(authService) {
         this.authService = authService;
+        this.verifyEmail = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { email, otp } = req.body;
+                const user = yield this.authService.verifyEmail(email, otp);
+                if (!user) {
+                    return next(new errorhandler_utils_1.default({
+                        message: "User not found",
+                        statusCode: 404,
+                    }));
+                }
+                res.status(200).json({
+                    userId: user._id,
+                    name: user.name,
+                    email: user.email,
+                    verified: user.verified,
+                });
+            }
+            catch (error) {
+                next(error);
+            }
+        });
         this.logIn = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { email, password } = req.body;

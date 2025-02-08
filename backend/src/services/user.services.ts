@@ -31,7 +31,9 @@ export class UserService {
     <meta name="x-apple-disable-message-reformatting" />
   </head>
   <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
-    Welcome to UMURAVA Skills Challenge Program
+    Dear ${
+      user.name ? user.name : "valuable user"
+    }, welcome to UMURAVA Skills Challenge Program. We are excited to have you on board. We believe that you will have a great experience with us. If you have any questions or need help, please feel free to reach out to us. We are here to help you. Thank you for choosing UMURAVA. We look forward to seeing you grow with us. Best regards, UMURAVA Team.
     <div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ </div>
   </div>
 

@@ -44,7 +44,9 @@ class AuthService {
     <meta name="x-apple-disable-message-reformatting" />
   </head>
   <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
-    UMURAVA Password Reset Request
+    Dear ${
+      user.name ? user.name : "valuable user"
+    }, We received a request to reset your password. Please enter the following verification code to reset your password. If you didn't request this change, you can ignore this message.
     <div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ </div>
   </div>
 

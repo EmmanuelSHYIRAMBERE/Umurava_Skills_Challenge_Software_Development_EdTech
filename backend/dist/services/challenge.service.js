@@ -18,6 +18,12 @@ class ChallengeService {
             return newChallenge;
         });
     }
+    getOpenChallenges() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const openChallenges = yield challenge_model_1.Challenge.find({ isOpen: true });
+            return openChallenges;
+        });
+    }
     getAllChallenges() {
         return __awaiter(this, void 0, void 0, function* () {
             const allChallenges = yield challenge_model_1.Challenge.find({});
