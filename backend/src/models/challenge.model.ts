@@ -1,5 +1,23 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+// Interface for subtasks
+interface ISubtask {
+  title: string;
+  description?: string;
+  url?: string;
+  note?: string;
+}
+
+// Interface for tasks
+interface ITask {
+  title: string;
+  description?: string;
+  subtasks?: ISubtask[];
+  url?: string;
+  note?: string;
+}
+
+// Main challenge interface
 export interface IChallenge extends Document {
   _id: Schema.Types.ObjectId;
   title: string;
@@ -10,6 +28,7 @@ export interface IChallenge extends Document {
   projectDescription: string;
   projectBrief: string;
   projectDescriptionTasks: string;
+  tasks: ITask[];
   skillsNeeded: string[];
   seniority: "Junior" | "Intermediate" | "Senior";
   isOpen: boolean;
@@ -21,6 +40,24 @@ export interface IChallenge extends Document {
   updatedAt: Date;
 }
 
+// Subtask Schema
+const SubtaskSchema = new Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  url: { type: String },
+  note: { type: String },
+});
+
+// Task Schema
+const TaskSchema = new Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  subtasks: [SubtaskSchema],
+  url: { type: String },
+  note: { type: String },
+});
+
+// Main Challenge Schema
 const ChallengeSchema = new Schema<IChallenge>(
   {
     title: { type: String, required: true },
@@ -31,6 +68,7 @@ const ChallengeSchema = new Schema<IChallenge>(
     projectDescription: { type: String },
     projectBrief: { type: String, required: true, maxlength: 50 },
     projectDescriptionTasks: { type: String, required: true, maxlength: 500 },
+    tasks: [TaskSchema],
     skillsNeeded: [{ type: String }],
     seniority: {
       type: String,

@@ -11,6 +11,10 @@ const authService = new auth_service_1.default();
 const authController = new auth_controller_1.default(authService);
 // In your routes file
 authRouter.post("/login", authController.logIn);
+authRouter.post("/verifyEmail", authController.verifyEmail);
 authRouter.post("/change-password", authController.changePassword);
+authRouter.post("/forgot-password", authController.forgotPassword);
+authRouter.post("/reset-password", authController.resetPassword);
+authRouter.post("/logout", authController.logout);
 exports.default = authRouter;
 //# sourceMappingURL=auth.route.js.map

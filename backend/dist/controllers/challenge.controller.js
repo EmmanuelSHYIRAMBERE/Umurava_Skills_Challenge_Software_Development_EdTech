@@ -68,6 +68,10 @@ class ChallengeController {
             }
             res.status(201).json({ challenge });
         }));
+        this.getOpenChallenges = (0, errorhandler_utils_1.catchAsyncError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const challenges = yield this.challengeService.getOpenChallenges();
+            res.status(200).json({ challenges });
+        }));
         this.getChallenges = (0, errorhandler_utils_1.catchAsyncError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const challenges = yield this.challengeService.getAllChallenges();
             res.status(200).json({ challenges });

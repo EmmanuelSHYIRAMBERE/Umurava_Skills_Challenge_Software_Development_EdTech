@@ -16,6 +16,22 @@ components:
         email: "email@me.com"
         password: "SecurePass123!"
 
+    verifyEmailRequest:
+      type: object
+      required:
+        - email
+        - otp
+      properties:
+        email:
+          type: string
+          description: The email of the user
+        otp:
+          type: string
+          description: The otp sent to the user email
+      example:
+        email: "email@me.com"
+        otp: "123456"
+
     changePasswordRequest:
       type: object
       required:
@@ -73,7 +89,7 @@ paths:
     post:
       summary: User login
       tags: [authentication]
-      description: Authenticate a user and return an access token
+      description: Log in a user with email and password
       requestBody:
         required: true
         content:
@@ -87,10 +103,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/login"
-        "400":
-          description: Bad request, missing email or password
         "401":
           description: Unauthorized, incorrect email or password
+        "500":
+          description: Internal server error
+
+  /api/v1/auth/verifyEmail:
+    post:
+      summary: Verify email
+      tags: [authentication]
+      description: Verify user email using OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/verifyEmailRequest"
+      responses:
+        "200":
+          description: Email verified successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/verifyEmailRequest"
+        "400":
+          description: Bad request, missing email or otp
+        "401":
+          description: Unauthorized, incorrect email or otp
         "404":
           description: User not found
         "500":

@@ -14,5 +14,6 @@ userRouter.get("/", tokenverification_middleware_1.verifyAccessToken, adminverif
 userRouter.get("/:id", tokenverification_middleware_1.verifyAccessToken, userControllerInstance.getUserById);
 userRouter.put("/:id", tokenverification_middleware_1.verifyAccessToken, userControllerInstance.updateUser);
 userRouter.delete("/:id", tokenverification_middleware_1.verifyAccessToken, userControllerInstance.deleteUser);
+userRouter.post("/resendToken", userControllerInstance.resendToken);
 exports.default = userRouter;
 //# sourceMappingURL=user.route.js.map

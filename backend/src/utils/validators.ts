@@ -9,6 +9,23 @@ export const userValidationSchema = Joi.object({
   role: Joi.string().valid("user", "admin").default("user"),
 });
 
+// Subtask validation schema
+const subtaskValidationSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().optional(),
+  url: Joi.string().uri().optional(),
+  note: Joi.string().optional(),
+});
+
+// Task validation schema
+const taskValidationSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().optional(),
+  subtasks: Joi.array().items(subtaskValidationSchema).optional(),
+  url: Joi.string().uri().optional(),
+  note: Joi.string().optional(),
+});
+
 // Challenge validation schema
 export const challengeValidationSchema = Joi.object({
   title: Joi.string().required(),
@@ -19,6 +36,7 @@ export const challengeValidationSchema = Joi.object({
   projectDescription: Joi.string().optional(),
   projectBrief: Joi.string().required(),
   projectDescriptionTasks: Joi.string().optional(),
+  tasks: Joi.array().items(taskValidationSchema).optional(),
   skillsNeeded: Joi.array().items(Joi.string()).optional(),
   seniority: Joi.string().valid("Junior", "Intermediate", "Senior").optional(),
   timeline: Joi.number().optional(),

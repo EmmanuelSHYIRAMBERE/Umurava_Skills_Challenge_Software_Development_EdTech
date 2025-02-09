@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import usePost from "@/hooks/use-post";
 import { useToast } from "@/hooks/use-toast";
 import { IUser } from "@/types";
+import { SERVER_BASE_URL } from "@/constansts/constants";
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
@@ -23,11 +24,7 @@ const VerifyOtp = () => {
   // Get user from localStorage with proper type checking
   const userString = localStorage.getItem("user");
 
-  console.log("userString", userString);
-
   const user: IUser | null = userString ? JSON.parse(userString) : null;
-
-  console.log("user", user);
 
   // If no user or no user role, redirect to login
   if (!user || !user.email) {
@@ -82,16 +79,31 @@ const VerifyOtp = () => {
     }
 
     try {
-      const response = await fetch("/api/v1/user/resendToken", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: userData.email }),
-      });
+      const response = await fetch(
+        `${SERVER_BASE_URL}/api/v1/user/resendToken`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: userData.email }),
+        }
+      );
 
-      const data = await response.json();
+      // Check if response has content before trying to parse JSON
+      const contentType = response.headers.get("content-type");
+      let data;
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        // Handle non-JSON response
+        const text = await response.text();
+        data = { message: text };
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to resend verification email");
+        throw new Error(
+          data.error || data.message || "Failed to resend verification email"
+        );
       }
 
       toast({
@@ -103,7 +115,10 @@ const VerifyOtp = () => {
       console.error("Error resending email", err);
       toast({
         title: "Error",
-        description: "Failed to resend verification email",
+        description:
+          err instanceof Error
+            ? err.message
+            : "Failed to resend verification email",
       });
     } finally {
       setIsResending(false);
@@ -123,7 +138,7 @@ const VerifyOtp = () => {
           </div>
           <p className="text-gray-700 text-lg font-medium">Enter OTP Code</p>
           <p className="text-gray-500 text-sm">
-            We have sent an OTP to your email:
+            We have sent an OTP to your email address{" "}
             <span className="font-semibold">{userData && userData.email}</span>.
             Please check your inbox.
           </p>
