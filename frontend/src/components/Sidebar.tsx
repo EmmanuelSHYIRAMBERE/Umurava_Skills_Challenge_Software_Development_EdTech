@@ -147,11 +147,11 @@ const Sidebar = () => {
                     ? user.name.slice(0, 15) + "..."
                     : user.name}
                 </span>
-                <span className="ml-2 text-sm">{user.email}</span>
+                <span className="ml-2 text-sm">{user.email.length>15?user.email.slice(0,15) + "...":user.email}</span>
               </div>
             </Link>
             <LuLogOut
-              className="ml-10 cursor-pointer"
+              className="ml-5 cursor-pointer  text-red-600"
               onClick={confirmLogout}
             />
           </div>

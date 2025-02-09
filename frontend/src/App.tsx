@@ -76,7 +76,7 @@ export default function App() {
     {
       path: "dashboard",
       element: (
-        <ProtectedRoute allowedRoles={["user"]}>
+        <ProtectedRoute allowedRoles={["user", "admin"]}>
           <DashboardLayout />
         </ProtectedRoute>
       ),
@@ -143,6 +143,10 @@ export default function App() {
         {
           path: "/admin/challenges/:_id",
           element: <ProjectBrief />,
+        },
+        {
+          path: "/admin/challenges/edit/:_id",
+          element: <CreateChallengeForm />,
         },
         {
           path: "community",

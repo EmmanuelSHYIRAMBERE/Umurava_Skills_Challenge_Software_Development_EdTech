@@ -127,11 +127,11 @@ const ContactUs: React.FC = () => {
         </div>
         <div className="flex items-center mb-4">
           <FaEnvelope className="mr-2 text-gray-500" />
-          <p>Email: info@sitegroup.rw</p>
+          <p>Email: info@umurava.rw</p>
         </div>
         <div className="flex items-center mb-4">
           <FaPhoneAlt className="mr-2 text-gray-500" />
-          <p>(+250) 780064017/0788510255/0782280829</p>
+          <p>(+250) 780064017</p>
         </div>
         <div className="flex justify-center">
           <a

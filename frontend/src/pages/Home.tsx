@@ -23,12 +23,29 @@ import {
 } from "react-icons/fa";
 import GetStarted from "./comp/HowToGetStarted";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
-  const handleGetStarted = () => {
-  navigate("/login");
-  };
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userRole, setUserRole] = useState(null);
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")!)
+        : null;
+  
+    if (token && token !== "undefined" && user && user !== undefined) {
+      setIsLoggedIn(true);
+      setUserRole(user.role);
+    }
+    }, []);
+    const isAdmin = userRole === "admin";
+    console.log("userrole",userRole)
+const handleGetStarted = () => {
+  navigate((isLoggedIn && (isAdmin ? "/admin" : "/dashboard")) || "/login");
+};
   return (
     <>
       <div className="items-center justify-center min-h-screen max-w-6xl mx-auto">

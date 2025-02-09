@@ -7,11 +7,22 @@ import ParticipantsList from "./ParticipantList";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
 import { useEffect, useState } from "react";
+import { Oval } from "react-loader-spinner";
+import { toast } from "react-toastify";
+import { Toaster } from "@/components/ui/toaster";
+interface SubTask {
+  title: string;
+}
 
+interface Task {
+  title: string;
+  subtasks: SubTask[];
+}
 interface ProjectData {
   title: string;
-  description: string;
-  tasks: string;
+  projectDescription: string;
+  tasks: Task[]; // Changed from string to Task[]
+  projectBrief: string;
   deliverables: string;
   additionalDeliverables: string;
   note: string;
@@ -20,11 +31,16 @@ interface ProjectData {
   category: string;
   duration: string;
   moneyPrize: string;
+  type: string;
+  deadline:Date;
 }
 const ProjectBrief = () => {
     const [projectData, setProjectData] = useState<ProjectData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
+    const [showConfirmation, setShowConfirmation] = useState(false);
+      const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
     const { _id } = useParams<{ _id: string }>(); 
 
@@ -46,7 +62,7 @@ const ProjectBrief = () => {
               },
             }
           );
-          console.log("response.data.challenge",response.data.challenge);
+          console.log("setProjectData----", response.data.challenge);
           setProjectData(response.data.challenge);
         } catch (err) {
           setError("Failed to fetch project data.");
@@ -59,12 +75,53 @@ const ProjectBrief = () => {
       fetchProjectData();
     }, [_id]);
 
+const handleDelete = async () => {
+  setIsLoading(true);
+  const token = localStorage.getItem("token");
+  const loadingToast = toast.loading("Deleting project...");
+
+  try {
+    await axios.delete(`${SERVER_BASE_URL}/api/v1/challenges/${_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast.dismiss(loadingToast);
+    toast.success("Project deleted successfully!");
+    // Navigate back to challenges list after successful deletion
+    navigate("/admin/challenges");
+  } catch (err) {
+    toast.dismiss(loadingToast);
+    toast.error("Failed to delete project. Please try again.");
+    setError("Failed to delete project.");
+    console.log("error", err);
+  } finally {
+    setIsLoading(false);
+  }
+}
+const confirmLogout = () => {
+  setShowConfirmation(true);
+};
+
+const cancelLogout = () => {
+  setShowConfirmation(false);
+};
     if (loading) {
-      return <div>Loading...</div>;
-    }
+       return (
+         <div className="flex items-center justify-center h-screen">
+           <Oval color="#00BFFF" height={40} width={40} />
+         </div>
+       );
+     }
 
     if (error) {
-      return <div>{error}</div>;
+      return (
+        <div className="flex items-center justify-center h-screen text-red-600">
+          {error}
+        </div>
+      );
     }
 
     if (!projectData) {
@@ -93,10 +150,11 @@ const ProjectBrief = () => {
             to=""
             className="text-blue-600 hover:text-blue-700 transition-colors"
           >
-            Design a Dashboard for Sokofund
+            {projectData.title}
           </Link>
         </div>
       </div>
+      <Toaster />
       <div className="flex px-8 ml-8">
         <section className="max-w-2xl pr-6">
           <Card className="overflow-hidden">
@@ -108,82 +166,28 @@ const ProjectBrief = () => {
             <CardContent className="p-8">
               {/* Project Title */}
               <h2 className="text-2xl font-bold mb-6">
-                Project Brief : {projectData.title}
+                Project Brief : {projectData.projectBrief}
               </h2>
 
               {/* Project Description */}
               <p className="text-gray-700 mb-8 leading-relaxed">
-                A Fintech company that is developing a Digital Financial
-                Platform designed for businesses and their workforce in Africa
-                is partnering with Umurava to run a Skills Challenge for Product
-                Design. This Fintech Company offers Payroll Management System to
-                Employers and Embedded Financial services and products to
-                Employees and Gig Workers across Africa.
+                {projectData.projectDescription}
               </p>
 
               {/* Tasks Section */}
               <div className="space-y-8">
-                <section>
-                  <h3 className="text-xl font-bold mb-4">Tasks:</h3>
-                  <div className="mb-6">
+                {projectData.tasks.map((task, index) => (
+                  <section key={index}>
                     <h4 className="text-lg font-semibold mb-3">
-                      Product Requirements
+                      {task.title}:
                     </h4>
                     <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                      <li>UX research to understand Project Requirements</li>
-                      <li>Understanding User Needs</li>
-                      <li>Understanding Business Goals</li>
-                      <li>Determine interaction between users</li>
-                      <li>Requirements Catalog</li>
+                      {task.subtasks.map((subtask, subtaskIndex) => (
+                        <li key={subtaskIndex}>{subtask.title}</li>
+                      ))}
                     </ul>
-                  </div>
-                </section>
-
-                <section>
-                  <h4 className="text-lg font-semibold mb-3">
-                    Product Design:
-                  </h4>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                    <li>User Interface Design for each step</li>
-                    <li>
-                      Creating wireframes to outline the basic structure and
-                      layout of the web and mobile app.
-                    </li>
-                    <li>
-                      Designing visually appealing and user-friendly interfaces
-                      for the web and mobile apps focusing on usability and user
-                      experience.
-                    </li>
-                    <li>
-                      Ensuring the web application works seamlessly across web,
-                      mobile, and tablet devices.
-                    </li>
-                    <li>
-                      Provide a feedback session for in-development guidance
-                    </li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h4 className="text-lg font-semibold mb-3">Deliverables:</h4>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                    <li>Requirements Catalog and User Interaction Diagram</li>
-                    <li>User Interface Mockups</li>
-                    <li>Payroll and HR System Design Completed</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h4 className="text-lg font-semibold mb-3">
-                    Additional Deliverables:
-                  </h4>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                    <li>
-                      The Product Designer will provide all documents and
-                      deliverables to the client before the review meetings
-                    </li>
-                  </ul>
-                </section>
+                  </section>
+                ))}
 
                 <section>
                   <h4 className="text-lg font-semibold mb-3">NOTE:</h4>
@@ -207,8 +211,7 @@ const ProjectBrief = () => {
             <Card className="max-w-md p-6">
               <h2 className="text-xl font-bold mb-4">Key Instructions:</h2>
               <p className="text-gray-600 mb-6">
-                You are free to schedule the clarification call with the team
-                via this
+                {projectData.keyInstructions}
               </p>
 
               <div className="space-y-4">
@@ -218,7 +221,9 @@ const ProjectBrief = () => {
                     <Mail className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-medium">talent@umurava.africa</div>
+                    <div className="font-medium">
+                      {projectData.contactEmail}
+                    </div>
                     <div className="text-sm text-gray-500">Contact Email</div>
                   </div>
                 </div>
@@ -229,7 +234,7 @@ const ProjectBrief = () => {
                     <Palette className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-medium">Web design</div>
+                    <div className="font-medium">{projectData.type}</div>
                     <div className="text-sm text-gray-500">
                       Challenge Category
                     </div>
@@ -242,7 +247,7 @@ const ProjectBrief = () => {
                     <Calendar className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-medium">7 Days</div>
+                    <div className="font-medium">{projectData.duration}</div>
                     <div className="text-sm text-gray-500">Duration</div>
                   </div>
                 </div>
@@ -253,7 +258,7 @@ const ProjectBrief = () => {
                     <DollarSign className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-medium">$150 - $400</div>
+                    <div className="font-medium">${projectData.moneyPrize}</div>
                     <div className="text-sm text-gray-500">Money Prize</div>
                   </div>
                 </div>
@@ -263,13 +268,24 @@ const ProjectBrief = () => {
               <div className="flex gap-4 mt-8">
                 <button
                   className="flex-1 py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                  onClick={() => console.log("Delete clicked")}
+                  onClick={confirmLogout}
                 >
                   Delete
                 </button>
                 <button
                   className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  onClick={() => console.log("Edit clicked")}
+                  onClick={() =>
+                    navigate(`/admin/challenges/edit/${_id}`, {
+                      state: {
+                        challengeData: {
+                          ...projectData,
+                          deadline: new Date(projectData.deadline)
+                            .toISOString()
+                            .split("T")[0], // Format date for input
+                        },
+                      },
+                    })
+                  }
                 >
                   Edit
                 </button>
@@ -281,6 +297,30 @@ const ProjectBrief = () => {
           </section>
         </div>
       </div>
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p className="mb-4 text-blue-500">
+              Are you sure you want to delete this challenge?
+            </p>
+            <div className="flex justify-end">
+              <button
+                className="mr-2 px-4 py-2 bg-gray-300 rounded"
+                onClick={cancelLogout}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded"
+                onClick={handleDelete}
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging out..." : "Logout"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
