@@ -22,7 +22,6 @@ interface PasswordInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   error: string;
-
 }
 
 // Password Input component with toggle functionality
@@ -160,7 +159,7 @@ const Login: React.FC = () => {
           : `${SERVER_BASE_URL}/api/v1/auth/login`,
         apiData
       );
-     toast.success("Success!");
+      toast.success("Success!");
       console.log("response", response);
       // Store user data and token in local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -170,7 +169,11 @@ const Login: React.FC = () => {
       if (isSignUp) {
         navigate("/verify-email");
       } else {
-        navigate("/dashboard");
+        if (response.data.user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -275,7 +278,7 @@ const Login: React.FC = () => {
                   name="role"
                   className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                   value={formData.role}
-                  onChange={ handleInputChange}
+                  onChange={handleInputChange}
                 >
                   <option value="user">User</option>
                   <option value="admin">Admin</option>

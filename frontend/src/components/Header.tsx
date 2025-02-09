@@ -13,10 +13,10 @@ const Header = () => {
       ? JSON.parse(localStorage.getItem("user")!)
       : null;
 
-    if (token && user) {
-      setIsLoggedIn(true);
-      setUserRole(user.role);
-    }
+  if (token && token !== "undefined" && user && user !== undefined) {
+    setIsLoggedIn(true);
+    setUserRole(user.role);
+  }
   }, []);
 
   const isActive = (path: string) => {
