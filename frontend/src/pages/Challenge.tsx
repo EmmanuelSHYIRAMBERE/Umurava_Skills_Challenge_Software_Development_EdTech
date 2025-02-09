@@ -46,7 +46,7 @@ export default function HomeChallenge() {
       {challenges.length === 0 ? (
         <div>No available challenges.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 min-h-screen max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 max-w-6xl mx-auto">
           {challenges.map((challenge) => (
             <HomeChallengeCard key={challenge._id} challenge={challenge} />
           ))}

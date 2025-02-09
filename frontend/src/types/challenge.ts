@@ -9,13 +9,14 @@ export interface ChallengeCountStatusCardProps {
 export interface Challenge {
   id: string;
   title: string;
-  skills: string[];
+  skillsNeeded: string[];
   seniority: string;
   status: "Completed" | "Open" | "Ongoing";
-  timeline: string;
+  duration: string;
   _id?: string;
   description?: string;
   moneyPrize?: number;
+  createdAt: string;
 }
 export interface ChallengeCount {
   status: "Completed" | "Open" | "Ongoing";

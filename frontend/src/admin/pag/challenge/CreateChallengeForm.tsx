@@ -4,16 +4,23 @@ import { ChevronLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 interface FormData {
   title: string;
   deadline: string;
   duration: string;
-  prize: string;
-  email: string;
-  description: string;
-  brief: string;
-  tasks: string;
+  moneyPrize: string;
+  contactEmail: string;
+  projectDescription: string;
+  projectBrief: string;
+  projectDescriptionTasks: string;
+  skillsNeeded: string[];
+  seniority: string;
+  keyInstructions: string;
+  type: string;
 }
 
 interface TouchedState {
@@ -23,33 +30,41 @@ interface TouchedState {
 const CreateChallengeForm = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string>("");
+  const [skillInput, setSkillInput] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     title: "",
     deadline: "",
     duration: "",
-    prize: "",
-    email: "",
-    description: "",
-    brief: "",
-    tasks: "",
+    moneyPrize: "",
+    contactEmail: "",
+    projectDescription: "",
+    projectBrief: "",
+    projectDescriptionTasks: "",
+    skillsNeeded: [],
+    seniority: "",
+    keyInstructions: "",
+    type: "Challenge",
   });
 
   const [touched, setTouched] = useState<TouchedState>({
     title: false,
     deadline: false,
     duration: false,
-    prize: false,
-    email: false,
-    description: false,
-    brief: false,
-    tasks: false,
+    moneyPrize: false,
+    contactEmail: false,
+    projectDescription: false,
+    projectBrief: false,
+    projectDescriptionTasks: false,
+    seniority: false,
+    keyInstructions: false,
+    type: false,
   });
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -59,13 +74,40 @@ const CreateChallengeForm = () => {
   };
 
   const handleBlur = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name } = e.target;
     setTouched((prevState) => ({
       ...prevState,
       [name]: true,
     }));
+  };
+
+  const validateForm = (data: FormData): boolean => {
+    // Check string fields
+    const stringFields: (keyof FormData)[] = [
+      "title",
+      "deadline",
+      "duration",
+      "moneyPrize",
+      "contactEmail",
+      "projectDescription",
+      "projectBrief",
+      "projectDescriptionTasks",
+      "seniority",
+      "keyInstructions",
+      "type",
+    ];
+
+    const isStringFieldsValid = stringFields.every(
+      (field) =>
+        typeof data[field] === "string" && (data[field] as string).trim() !== ""
+    );
+
+    // Check skills array
+    const isSkillsValid = data.skillsNeeded.length > 0;
+
+    return isStringFieldsValid && isSkillsValid;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -77,11 +119,7 @@ const CreateChallengeForm = () => {
     }, {});
     setTouched(allTouched);
 
-    const isValid = Object.values(formData).every(
-      (value) => value.trim() !== ""
-    );
-
-    if (isValid) {
+    if (validateForm(formData)) {
       setIsSubmitting(true);
       setApiError("");
 
@@ -96,25 +134,51 @@ const CreateChallengeForm = () => {
             },
           }
         );
-
-        console.log("Challenge created successfully:", response.data);
-        navigate("/admin/challenges");
+console.log("resssssss",response)
+        toast.success("Challenge created successfully!");
+         setTimeout(() => {
+           navigate("/admin/challenges");
+         }, 2000); 
       } catch (error) {
         const axiosError = error as AxiosError<{ message: string }>;
-        console.error("Error creating challenge:", error);
-        setApiError(
+        const errorMessage =
           axiosError.response?.data?.message ||
-            "Failed to create challenge. Please try again."
-        );
+          "Failed to create challenge. Please try again.";
+        setApiError(errorMessage);
+        toast.error(errorMessage);
       } finally {
         setIsSubmitting(false);
       }
     }
   };
 
+  const handleAddSkill = () => {
+    if (skillInput.trim() !== "") {
+      setFormData((prev) => ({
+        ...prev,
+        skillsNeeded: [...prev.skillsNeeded, skillInput.trim()],
+      }));
+      setSkillInput("");
+    }
+  };
+
+  const handleRemoveSkill = (skillToRemove: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      skillsNeeded: prev.skillsNeeded.filter(
+        (skill) => skill !== skillToRemove
+      ),
+    }));
+  };
+
   const getInputClassName = (fieldName: keyof FormData): string => {
     const baseClasses =
       "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
+
+    if (fieldName === "skillsNeeded") {
+      return baseClasses;
+    }
+
     return touched[fieldName] && !formData[fieldName]
       ? `${baseClasses} border-red-500`
       : baseClasses;
@@ -122,6 +186,7 @@ const CreateChallengeForm = () => {
   return (
     <div className="w-full">
       {/* Navigation Header */}
+      <ToastContainer />
       <div className="border-b border-t p-4 ml-8 mb-6">
         <div className="max-w-7xl mx-auto flex items-center space-x-2 text-sm">
           <button
@@ -211,12 +276,12 @@ const CreateChallengeForm = () => {
                   </label>
                   <input
                     type="text"
-                    name="prize"
-                    value={formData.prize}
+                    name="moneyPrize"
+                    value={formData.moneyPrize}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Prize"
-                    className={getInputClassName("prize")}
+                    placeholder="moneyPrize"
+                    className={getInputClassName("moneyPrize")}
                   />
                 </div>
                 <div>
@@ -224,28 +289,42 @@ const CreateChallengeForm = () => {
                     Contact Email
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
+                    type="contactEmail"
+                    name="contactEmail"
+                    value={formData.contactEmail}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Email"
-                    className={getInputClassName("email")}
+                    placeholder="contact Email"
+                    className={getInputClassName("contactEmail")}
                   />
                 </div>
               </div>
-
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Challenge Type
+                </label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={getInputClassName("type")}
+                >
+                  <option value="Challenge">Challenge</option>
+                  <option value="Hackathon">Hackathon</option>
+                </select>
+              </div>
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Project Description
                 </label>
                 <textarea
-                  name="description"
-                  value={formData.description}
+                  name="projectDescription"
+                  value={formData.projectDescription}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Enter text here..."
-                  className={getInputClassName("description") + " h-32"}
+                  className={getInputClassName("projectDescription") + " h-32"}
                   maxLength={250}
                 />
                 <p className="text-sm text-gray-500 mt-1">
@@ -258,12 +337,12 @@ const CreateChallengeForm = () => {
                   Project Brief
                 </label>
                 <textarea
-                  name="brief"
-                  value={formData.brief}
+                  name="projectBrief"
+                  value={formData.projectBrief}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Enter text here..."
-                  className={getInputClassName("brief") + " h-24"}
+                  className={getInputClassName("projectBrief") + " h-24"}
                   maxLength={50}
                 />
                 <p className="text-sm text-gray-500 mt-1">
@@ -276,17 +355,90 @@ const CreateChallengeForm = () => {
                   Project Description & Tasks
                 </label>
                 <textarea
-                  name="tasks"
-                  value={formData.tasks}
+                  name="projectDescriptionTasks"
+                  value={formData.projectDescriptionTasks}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Enter text here..."
-                  className={getInputClassName("tasks") + " h-40"}
+                  className={
+                    getInputClassName("projectDescriptionTasks") + " h-40"
+                  }
                   maxLength={500}
                 />
                 <p className="text-sm text-gray-500 mt-1">
                   Keep this simple of 500 character
                 </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Skills Needed
+                </label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={skillInput}
+                    onChange={(e) => setSkillInput(e.target.value)}
+                    placeholder="Enter a skill"
+                    className="flex-1 p-2 border rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddSkill}
+                    className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {formData.skillsNeeded.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center gap-1"
+                    >
+                      {skill}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSkill(skill)}
+                        className="text-blue-800 hover:text-blue-900"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Seniority Level
+                </label>
+                <select
+                  name="seniority"
+                  value={formData.seniority}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={getInputClassName("seniority")}
+                >
+                  <option value="">Select Seniority Level</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Senior">Senior</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Key Instructions
+                </label>
+                <textarea
+                  name="keyInstructions"
+                  value={formData.keyInstructions}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Enter key instructions for the challenge..."
+                  className={getInputClassName("keyInstructions") + " h-12"}
+                  maxLength={100}
+                />
               </div>
 
               <div className="flex gap-4">

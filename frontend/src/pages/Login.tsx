@@ -3,6 +3,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constansts/constants";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
   email: string;
@@ -10,6 +12,7 @@ interface FormData {
   confirmPassword: string;
   phone: string;
   name: string;
+  role: "user" | "admin";
 }
 
 interface PasswordInputProps {
@@ -19,6 +22,7 @@ interface PasswordInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   error: string;
+
 }
 
 // Password Input component with toggle functionality
@@ -34,9 +38,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <div className="mb-4 relative">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <label className="block text-gray-700">{label}</label>
-        {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm ml-2 ">{error}</p>}
       </div>
       <div className="relative flex items-center">
         <input
@@ -75,11 +79,14 @@ const Login: React.FC = () => {
     confirmPassword: "",
     phone: "",
     name: "",
+    role: "user",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -142,6 +149,7 @@ const Login: React.FC = () => {
           password: formData.password,
           phone: formData.phone,
           name: formData.name,
+          role: formData.role,
         }
       : { email: formData.email, password: formData.password };
     setIsLoading(true);
@@ -152,7 +160,8 @@ const Login: React.FC = () => {
           : `${SERVER_BASE_URL}/api/v1/auth/login`,
         apiData
       );
-      alert("Success!");
+     toast.success("Success!");
+      console.log("response", response);
       // Store user data and token in local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
@@ -164,10 +173,13 @@ const Login: React.FC = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        api: "An error occurred. Please try again.",
-      }));
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -175,8 +187,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen  bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg mt-8 shadow-md">
+    <div className="flex justify-center items-center  bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md my-20">
         <div className="flex justify-between mb-6">
           <button
             type="button"
@@ -252,6 +264,23 @@ const Login: React.FC = () => {
                   onChange={handleInputChange}
                 />
               </div>
+              <div className="mb-4">
+                <div className="flex items-center justify-between">
+                  <label className="block text-gray-700">Role</label>
+                  {errors.role && (
+                    <p className="text-red-500 text-sm ml-2">{errors.role}</p>
+                  )}
+                </div>
+                <select
+                  name="role"
+                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  value={formData.role}
+                  onChange={ handleInputChange}
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
             </>
           )}
           <PasswordInput
@@ -276,8 +305,6 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {errors.api && <p className="text-red-500 mb-4">{errors.api}</p>}
-
           <button
             type="submit"
             disabled={isLoading}
@@ -297,6 +324,7 @@ const Login: React.FC = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

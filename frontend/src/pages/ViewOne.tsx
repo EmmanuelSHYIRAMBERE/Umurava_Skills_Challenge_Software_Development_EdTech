@@ -50,7 +50,7 @@ const ViewOne: React.FC = () => {
     },
     {
       icon: <Calendar className="text-blue-600" />,
-      title: `${challenge?.timeline} days`,
+      title: `${challenge?.duration} days`,
       subtitle: "Duration",
     },
     {
