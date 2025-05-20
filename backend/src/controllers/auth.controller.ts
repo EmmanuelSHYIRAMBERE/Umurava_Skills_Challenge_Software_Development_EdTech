@@ -19,6 +19,9 @@ class AuthController {
     try {
       const { email, otp } = req.body;
 
+      console.log(body);
+
+
       const user = await this.authService.verifyEmail(email, otp);
 
       if (!user) {
